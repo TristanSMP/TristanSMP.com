@@ -13,24 +13,48 @@ class MyDocument extends Document {
   }
 
   render() {
-    const meta = {
-      title: 'Next.js Blog Starter Kit',
-      description: 'Clone and deploy your own Next.js portfolio in minutes.',
-      image:
-        'https://assets.vercel.com/image/upload/q_auto/front/vercel/dps.png'
-    }
+    const meta = {}
 
     return (
       <Html lang="en">
         <Head>
           <meta name="robots" content="follow, index" />
-          <meta name="description" content={meta.description} />
-          <meta property="og:site_name" content={meta.title} />
-          <meta property="og:description" content={meta.description} />
-          <meta property="og:title" content={meta.title} />
-          <meta property="og:image" content={meta.image} />
+          <meta content="Tristan SMP" property="og:title" />
+          <meta
+            content="TristanSMP has been up since July 2021 with some amazing builds!
+          Tristan SMP is, the world's most friendly Minecraft SMP with no griefers as their damage is rolled back and banned!
+          We have Proximity Chat and a very advanced Anti-Cheat and Anti-XRAY to cancel out cheaters and make it fair for all players.
+          We hope you join and have a fun time while you are at it."
+            property="og:description"
+          />
+          <meta content="https://www.tristansmp.com/" property="og:url" />
+          <meta
+            content="https://www.tristansmp.com/favicon-32x32.png"
+            property="og:image"
+          />
+          <meta content="#ff00e5" data-react-helmet="true" name="theme-color" />
+          <link
+            rel="apple-touch-icon"
+            sizes="180x180"
+            href="/apple-touch-icon.png"
+          />
+          <link
+            rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="/favicon-32x32.png"
+          />
+          <link
+            rel="icon"
+            type="image/png"
+            sizes="16x16"
+            href="/favicon-16x16.png"
+          />
+          <link rel="manifest" href="/site.webmanifest" />
+          <meta name="msapplication-TileColor" content="#9f00a7" />
+          <meta name="theme-color" content="#ffffff" />
           <meta name="twitter:card" content="summary_large_image" />
-          <meta name="twitter:site" content="@yourname" />
+          <meta name="twitter:site" content="@twisttaan" />
           <meta name="twitter:title" content={meta.title} />
           <meta name="twitter:description" content={meta.description} />
           <meta name="twitter:image" content={meta.image} />
