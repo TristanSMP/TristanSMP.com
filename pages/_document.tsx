@@ -55,9 +55,6 @@ class MyDocument extends Document {
           <meta name="theme-color" content="#ffffff" />
           <meta name="twitter:card" content="summary_large_image" />
           <meta name="twitter:site" content="@twisttaan" />
-          <meta name="twitter:title" content={meta.title} />
-          <meta name="twitter:description" content={meta.description} />
-          <meta name="twitter:image" content={meta.image} />
         </Head>
         <body>
           <Main />
