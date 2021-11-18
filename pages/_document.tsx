@@ -18,6 +18,8 @@ class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
+          <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8863904909693060"
+     crossorigin="anonymous"></script>
           <meta name="robots" content="follow, index" />
           <meta content="Tristan SMP" property="og:title" />
           <meta
