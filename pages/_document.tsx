@@ -20,8 +20,21 @@ class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
-          <Script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8863904909693060"
-     crossorigin="anonymous"></Script>
+          
+          <script
+   async
+    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8863904909693060"
+ />
+ <script
+          dangerouslySetInnerHTML={{
+            __html: `
+               (adsbygoogle = window.adsbygoogle || []).push({
+                   google_ad_client: "8863904909693060",
+                   enable_page_level_ads: true
+              });
+                `
+          }}
+ />
           <meta name="robots" content="follow, index" />
           <meta content="Tristan SMP" property="og:title" />
           <meta
