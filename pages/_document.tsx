@@ -6,6 +6,8 @@ import Document, {
   DocumentContext
 } from 'next/document'
 
+import Script from 'next/script'
+
 class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
     const initialProps = await Document.getInitialProps(ctx)
@@ -18,8 +20,8 @@ class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
-          <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8863904909693060"
-     crossorigin="anonymous"></script>
+          <Script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8863904909693060"
+     crossorigin="anonymous"></Script>
           <meta name="robots" content="follow, index" />
           <meta content="Tristan SMP" property="og:title" />
           <meta
