@@ -3,7 +3,7 @@ import axios from 'axios'
 import { collection, getDocs, query } from 'firebase/firestore'
 import type { NextPage } from 'next'
 import { useEffect, useState } from 'react'
-import { firestore } from '../utils'
+import { firestore, getTimestamp } from '../utils'
 
 type Post = {
   author: number
@@ -21,6 +21,7 @@ type PostWithAuthor = {
   discordTag: string
   discordName: string
   username: string
+  date: Date
 }
 
 type DiscordLookupResult = {
@@ -58,12 +59,27 @@ const Photos: NextPage = () => {
               discordName: '',
               username: ''
             }))
+          // order the posts by image id
+          const imageID = post.imageURL.split('/')[5]
+          const date = new Date(getTimestamp(imageID))
 
-          return { ...post, ...author }
+          // order the posts by date
+          return {
+            ...post,
+            ...author,
+            date
+          }
         })
       )
 
-      setPosts(postsWithAuthors)
+      // sort the posts by date
+      const sortedPosts = postsWithAuthors.sort((a, b) => {
+        if (a.date > b.date) return -1
+        if (a.date < b.date) return 1
+        return 0
+      })
+
+      setPosts(sortedPosts)
 
       setLoading(false)
     } catch (error) {

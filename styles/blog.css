@@ -1951,7 +1951,6 @@ video {
 .text-gray-600 {
   --text-opacity: 1;
   color: #7289da;
-  color: rgba(113, 128, 150, var(--text-opacity));
 }
 
 .text-gray-900 {
@@ -2089,7 +2088,6 @@ h1 {
 .meta {
   --text-opacity: 1;
   color: #7289da;
-  color: rgba(113, 128, 150, var(--text-opacity));
   margin-right: 2rem;
 }
 
@@ -2129,7 +2127,6 @@ h1 {
 .meta-line .meta-back {
   --text-opacity: 1;
   color: #7289da;
-  color: rgba(113, 128, 150, var(--text-opacity));
 }
 
 .nav-line {
