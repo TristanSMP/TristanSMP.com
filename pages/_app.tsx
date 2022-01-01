@@ -8,6 +8,11 @@ import Link from 'next/link'
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
+      <script
+        async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8863904909693060"
+      />
+
       <Head>
         <link
           rel="apple-touch-icon"
