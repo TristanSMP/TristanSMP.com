@@ -7,22 +7,28 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 
 const Home: NextPage = () => {
-  // Use scrollmagic to trigger confetti
-  useEffect(() => {
-    confetti({
-      particleCount: 100,
-      spread: 360,
-      origin: {
-        x: 0.5,
-        y: 0.5
-      }
-    })
-  }, [])
-
   return (
     <>
       <Head>
-        <title>TSMPstats</title>
+        {/* Primary Meta Tags */}
+        <title>tsmp stats</title>
+        <meta name="title" content="TSMP Stats Viewer" />
+        <meta name="description" content="online tsmp stats viewer." />
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://tristansmp.com/stats" />
+        <meta property="og:title" content="TSMP Stats Viewer" />
+        <meta property="og:description" content="online tsmp stats viewer." />
+        <meta property="og:image" content={''} />
+        {/* Twitter */}
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content="https://tristansmp.com/stats" />
+        <meta property="twitter:title" content="TSMP Stats Viewer" />
+        <meta
+          property="twitter:description"
+          content="online tsmp stats viewer."
+        />
+        <meta property="twitter:image" content={''} />
       </Head>
       <div>
         <section className="">
