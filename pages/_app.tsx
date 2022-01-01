@@ -59,6 +59,11 @@ function MyApp({ Component, pageProps }: AppProps) {
               </Link>
             </li>
             <li className="growing-underline mx-3">
+              <Link href="/photos">
+                <a>Photos</a>
+              </Link>
+            </li>
+            <li className="growing-underline mx-3">
               <Link href="/info">
                 <a>Docs</a>
               </Link>

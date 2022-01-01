@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import Link from 'next/link'
+import { Tooltip } from '@mui/material'
 
 const Home: NextPage = () => {
   useEffect(() => {
@@ -65,17 +66,21 @@ const Home: NextPage = () => {
               </Link>
             </div>
           </div>
-          <div className="flex justify-around md:block mt-8 md:mt-0 md:flex-1">
-            <div className="relative">
-              <Image
-                src="/assets/tristan.png"
-                alt=""
-                className="absolute -top-16 -left-10 rounded-full"
-                width={600}
-                height={600}
-              />
+          <Tooltip title="Photo of TSMP Spawn taken by Gamez Plays#1140">
+            <div className="flex justify-around md:block mt-8 md:mt-0 md:flex-1">
+              <div className="relative">
+                <Link href="/photos">
+                  <Image
+                    src="https://cdn.discordapp.com/attachments/910411610592538685/926200820456906843/2021-12-30_16.50.01.png"
+                    alt="TSMP Spawn"
+                    className="absolute -top-16 -left-10 rounded-lg cursor-pointer"
+                    width={1920}
+                    height={1080}
+                  />
+                </Link>
+              </div>
             </div>
-          </div>
+          </Tooltip>
         </section>
       </div>
     </>
