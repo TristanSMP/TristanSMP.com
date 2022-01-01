@@ -1,31 +1,40 @@
 {
-  "name": "portfolio",
+  "name": "tristansmp.com",
   "version": "1.0.0",
   "main": "index.js",
-  "license": "MIT",
+  "license": "PRIVATE",
   "scripts": {
     "dev": "next",
-    "build": "node ./scripts/gen-rss.js && next build",
+    "build": "next build",
     "start": "next start"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.36",
+    "@fortawesome/free-solid-svg-icons": "^5.15.4",
+    "@fortawesome/react-fontawesome": "^0.1.16",
+    "axios": "^0.24.0",
+    "canvas-confetti": "^1.4.0",
+    "firebase": "^9.6.1",
     "gray-matter": "^4.0.2",
     "next": "latest",
     "nextra": "^1.1.0",
-    "nextra-theme-blog": "^0.1.5",
+    "nextra-theme-blog": "^0.1.6",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "rss": "^1.2.2"
-    
+    "react-modal": "^3.14.4",
+    "rss": "^1.2.2",
+    "skinview3d": "^2.1.0"
   },
   "devDependencies": {
+    "@types/canvas-confetti": "^1.4.2",
     "@types/node": "16.11.6",
     "@types/react": "17.0.34",
-    "autoprefixer": "^10.4.0",
+    "@types/react-modal": "^3.13.1",
+    "autoprefixer": "^10.4.1",
     "eslint": "7",
     "eslint-config-next": "12.0.2",
-    "postcss": "^8.3.11",
-    "tailwindcss": "^2.2.19",
+    "postcss": "^8.4.5",
+    "tailwindcss": "^3.0.8",
     "typescript": "4.4.4"
   },
   "prettier": {
