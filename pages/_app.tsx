@@ -1,9 +1,9 @@
-import 'tailwindcss/tailwind.css'
-import '../styles/blog.css'
-import Image from 'next/image'
-import type { AppProps } from 'next/app'
-import Head from 'next/head'
-import Link from 'next/link'
+import "tailwindcss/tailwind.css";
+import "../styles/blog.css";
+import Image from "next/image";
+import type { AppProps } from "next/app";
+import Head from "next/head";
+import Link from "next/link";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -59,6 +59,11 @@ function MyApp({ Component, pageProps }: AppProps) {
               </Link>
             </li>
             <li className="growing-underline mx-3">
+              <Link href="/stats">
+                <a>Player Stats</a>
+              </Link>
+            </li>
+            <li className="growing-underline mx-3">
               <Link href="/donate">
                 <a>Donate</a>
               </Link>
@@ -78,7 +83,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <Component {...pageProps} />
       </div>
     </>
-  )
+  );
 }
 
-export default MyApp
+export default MyApp;
