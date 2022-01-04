@@ -4,8 +4,17 @@ import Image from "next/image";
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import Link from "next/link";
+import { fauth, firebase } from "../utils";
+import { useEffect, useState } from "react";
+import { User } from "@firebase/auth";
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const [user, setUser] = useState<User | null>(null);
+  useEffect(() => {
+    fauth.onAuthStateChanged(async (user) => {
+      setUser(user);
+    });
+  }, [user]);
   return (
     <>
       <script
@@ -83,6 +92,21 @@ function MyApp({ Component, pageProps }: AppProps) {
               <Link href="/info">
                 <a>Docs</a>
               </Link>
+            </li>
+            <li className="growing-underline mx-3">
+              <button
+                className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg"
+                onClick={() => {
+                  if (user) {
+                    fauth.signOut();
+                    window.location.href = `/markets/login`;
+                  } else {
+                    window.location.href = `/markets/login`;
+                  }
+                }}
+              >
+                {user ? "Logout" : "Login"}
+              </button>
             </li>
           </ul>
         </nav>

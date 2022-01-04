@@ -5,16 +5,18 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDiscord } from "@fortawesome/free-brands-svg-icons";
 import Image from "next/image";
 import { MarketsPage } from "../../components/MarketsPage";
-import { fauth, firestore } from "../../utils";
+import { fauth, firebaseAuth, firestore } from "../../utils";
 import { EventEmitter } from "fbemitter";
 import { User } from "@firebase/auth";
 import { Item } from "../../components/Item";
 import { query, collection, getDocs } from "firebase/firestore";
+import axios from "axios";
 
 type MarketItem = {
   base64: string;
   price: number;
   seller: string;
+  id: string;
 };
 
 export const signOutEvent = new EventEmitter();
@@ -34,11 +36,19 @@ const Home: NextPage = () => {
         const fstore = firestore.getFirestore();
         setUser(user);
         const q = query(collection(fstore, "market"));
-        const items = (await getDocs(q)).docs.map((d) =>
-          d.data()
-        ) as MarketItem[];
-        console.log(items);
-        setItems(items);
+        setItems(
+          await getDocs(q).then((docs) =>
+            docs.docs.map((doc) => {
+              const data = doc.data();
+              return {
+                base64: data.base64,
+                price: data.price,
+                seller: data.seller,
+                id: doc.id
+              };
+            })
+          )
+        );
         setLoading(false);
       } else {
         setLoading(false);
@@ -103,7 +113,29 @@ const Home: NextPage = () => {
               <div className="mt-4 flex justify-between">
                 <div>
                   <h3 className="text-sm text-white font-semibold">
-                    <a href="/bruh">
+                    <a
+                      onClick={() => {
+                        // buy the item https://us-central1-tristan-smp.cloudfunctions.net/api/market/buy/:itemid
+                        firebaseAuth
+                          .getAuth()
+                          .currentUser!.getIdToken(true)
+                          .then((idToken) => {
+                            axios
+                              .post(
+                                `https://us-central1-tristan-smp.cloudfunctions.net/api/market/buy/${item.id}?auth=${idToken}`,
+                                //`http://localhost:5001/tristan-smp/us-central1/api/market/buy/${item.id}?auth=${idToken}`,
+                                {
+                                  headers: {
+                                    "Content-Type": "application/json"
+                                  }
+                                }
+                              )
+                              .then((res) => {
+                                console.log(res);
+                              });
+                          });
+                      }}
+                    >
                       <span aria-hidden="true" className="absolute inset-0" />
                       {item.base64.split(" 😎 ")[1].replace("_", " ")}
                     </a>
