@@ -382,8 +382,13 @@ const Home: NextPage = () => {
                   </h3>
                 </div>
                 <p className="text-sm font-medium text-blue-600">
-                  {item.price} Diamonds <br /> Sold by{" "}
-                  {item.username ?? "*before we logged usernames*"}
+                  <span className="text-sm font-bold text-blue-600">
+                    {item.price} Diamonds <br /> Sold by{" "}
+                  </span>
+                  <br />
+                  <span className="text-sm font-medium text-gray-300">
+                    {item.username ?? "*before we logged usernames*"}
+                  </span>
                 </p>
               </div>
             </div>
