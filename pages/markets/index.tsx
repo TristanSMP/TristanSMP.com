@@ -328,7 +328,7 @@ const Home: NextPage = () => {
                       }}
                     >
                       <span aria-hidden="true" className="absolute inset-0" />
-                      {item.base64.split(" 😎 ")[1].replace("_", " ")}
+                      {item.base64.split(" 😎 ")[1].replaceAll("_", " ")}
                     </a>
                     <br />
                     {item.lore
