@@ -337,11 +337,13 @@ const Home: NextPage = () => {
                       <span aria-hidden="true" className="absolute inset-0" />
                       {item.customName.startsWith("TextComponentImpl")
                         ? `${item.customName.split('"')[1]} ${
-                            item.amount ?? "Unknown"
+                            item.amount ?? "Unknown Amount"
                           }`
                         : `${item.base64
                             .split(" 😎 ")[1]
-                            .replaceAll("_", " ")} ${item.amount ?? "Unknown"}`}
+                            .replaceAll("_", " ")} ${
+                            item.amount ?? "Unknown Amount"
+                          }`}
                     </a>
                     <br />
                     {item.lore
