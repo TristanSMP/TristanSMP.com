@@ -97,10 +97,10 @@ const Login: NextPage = () => {
                               </code>
                               <br />
                               <br />
-                              <span className="text-red-400">
+                              <span className="text-red-600">
                                 <strong>
-                                  your TSMP account details don't need to be
-                                  your Minecraft account details.
+                                  We are not Minecraft, Please Do NOT Use Your
+                                  Minecraft Account Details.
                                 </strong>
                               </span>
                             </p>

@@ -13,7 +13,7 @@ export function Item(props: { id: string; className?: string }) {
           Textures.items.find((item: { id: string }) => item.id === props.id)
             ?.texture
         }
-        className={props.className + " pixel bg-purple-300"}
+        className={props.className + " pixel"}
       />
     </>
   );

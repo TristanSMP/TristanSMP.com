@@ -3734,6 +3734,13 @@ markdown-table@^2.0.0:
   dependencies:
     repeat-string "^1.0.0"
 
+mctext-react@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/mctext-react/-/mctext-react-1.1.0.tgz#d548826656634c9f55f0efbd455bc5f3930774b0"
+  integrity sha512-cOMQpr08XPLc2m4GNUFLYRfvc7amX9bQqNRIpDMzh0gePv0Hd5uRz3A66jYfM0rRMLyeDbBqdBp4loipIS8icw==
+  dependencies:
+    prop-types "^15.5.8"
+
 md5.js@^1.3.4:
   version "1.3.5"
   resolved "https://registry.yarnpkg.com/md5.js/-/md5.js-1.3.5.tgz#b5d07b8e3216e3e27cd728d72f70d1e6a342005f"
@@ -4729,6 +4736,15 @@ promise@^7.1.1:
   integrity sha512-nolQXZ/4L+bP/UGlkfaIujX9BKxGwmQ9OT4mOt5yvy8iK1h3wqTEJCijzGANTCCl9nWjY41juyAn2K3Q1hLLTg==
   dependencies:
     asap "~2.0.3"
+
+prop-types@^15.5.8:
+  version "15.8.1"
+  resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.8.1.tgz#67d87bf1a694f48435cf332c24af10214a3140b5"
+  integrity sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==
+  dependencies:
+    loose-envify "^1.4.0"
+    object-assign "^4.1.1"
+    react-is "^16.13.1"
 
 prop-types@^15.6.2:
   version "15.8.0"

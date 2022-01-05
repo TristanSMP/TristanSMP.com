@@ -23,6 +23,7 @@
     "fbemitter": "^3.0.0",
     "firebase": "^9.6.1",
     "gray-matter": "^4.0.2",
+    "mctext-react": "^1.1.0",
     "next": "latest",
     "nextra": "^1.1.0",
     "nextra-theme-blog": "^0.1.6",
