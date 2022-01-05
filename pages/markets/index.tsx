@@ -29,6 +29,7 @@ type MarketItem = {
   id: string;
   lore: string[];
   enchants: string[];
+  customName: string;
 };
 
 export const signOutEvent = new EventEmitter();
@@ -72,7 +73,8 @@ const Home: NextPage = () => {
                       seller: data.seller,
                       id: doc.id,
                       lore: data.lore,
-                      enchants: data.enchants
+                      enchants: data.enchants,
+                      customName: data.customName
                     };
                   })
                 )
@@ -328,7 +330,9 @@ const Home: NextPage = () => {
                       }}
                     >
                       <span aria-hidden="true" className="absolute inset-0" />
-                      {item.base64.split(" 😎 ")[1].replaceAll("_", " ")}
+                      {item.customName.startsWith("TextComponentImpl")
+                        ? item.customName.split('"')[1]
+                        : item.base64.split(" 😎 ")[1].replaceAll("_", " ")}
                     </a>
                     <br />
                     {item.lore
