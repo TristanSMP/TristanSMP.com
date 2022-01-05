@@ -399,6 +399,9 @@ const Home: NextPage = () => {
         <Link href="https://www.npmjs.com/package/minecraft-textures">
           <a>Destruc7i0n</a>
         </Link>
+        <br />
+        The item icons are owned by Mojang Studios. This project is not
+        affiliated with Mojang Studios.
       </section>
     </>
   ) : (
