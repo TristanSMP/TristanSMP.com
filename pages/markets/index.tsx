@@ -21,6 +21,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { BadgeCheckIcon, ExclamationIcon } from "@heroicons/react/outline";
 // @ts-expect-error
 import McText from "mctext-react";
+import Link from "next/link";
 
 type MarketItem = {
   base64: string;
@@ -393,6 +394,11 @@ const Home: NextPage = () => {
             </div>
           ))}
         </div>
+        <br />
+        Textures Mapped by{" "}
+        <Link href="https://www.npmjs.com/package/minecraft-textures">
+          <a>Destruc7i0n</a>
+        </Link>
       </section>
     </>
   ) : (
