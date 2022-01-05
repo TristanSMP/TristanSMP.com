@@ -205,9 +205,9 @@ select {
  */
 
 button,
-[type='button'],
-[type='reset'],
-[type='submit'] {
+[type="button"],
+[type="reset"],
+[type="submit"] {
   -webkit-appearance: button;
 }
 
@@ -216,9 +216,9 @@ button,
  */
 
 button::-moz-focus-inner,
-[type='button']::-moz-focus-inner,
-[type='reset']::-moz-focus-inner,
-[type='submit']::-moz-focus-inner {
+[type="button"]::-moz-focus-inner,
+[type="reset"]::-moz-focus-inner,
+[type="submit"]::-moz-focus-inner {
   border-style: none;
   padding: 0;
 }
@@ -228,9 +228,9 @@ button::-moz-focus-inner,
  */
 
 button:-moz-focusring,
-[type='button']:-moz-focusring,
-[type='reset']:-moz-focusring,
-[type='submit']:-moz-focusring {
+[type="button"]:-moz-focusring,
+[type="reset"]:-moz-focusring,
+[type="submit"]:-moz-focusring {
   outline: 1px dotted ButtonText;
 }
 
@@ -279,8 +279,8 @@ textarea {
  * 2. Remove the padding in IE 10.
  */
 
-[type='checkbox'],
-[type='radio'] {
+[type="checkbox"],
+[type="radio"] {
   box-sizing: border-box; /* 1 */
   padding: 0; /* 2 */
 }
@@ -289,8 +289,8 @@ textarea {
  * Correct the cursor style of increment and decrement buttons in Chrome.
  */
 
-[type='number']::-webkit-inner-spin-button,
-[type='number']::-webkit-outer-spin-button {
+[type="number"]::-webkit-inner-spin-button,
+[type="number"]::-webkit-outer-spin-button {
   height: auto;
 }
 
@@ -299,7 +299,7 @@ textarea {
  * 2. Correct the outline style in Safari.
  */
 
-[type='search'] {
+[type="search"] {
   -webkit-appearance: textfield; /* 1 */
   outline-offset: -2px; /* 2 */
 }
@@ -308,7 +308,7 @@ textarea {
  * Remove the inner padding in Chrome and Safari on macOS.
  */
 
-[type='search']::-webkit-search-decoration {
+[type="search"]::-webkit-search-decoration {
   -webkit-appearance: none;
 }
 
@@ -425,9 +425,9 @@ ul {
  */
 
 html {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-    'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji',
-    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'; /* 1 */
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; /* 1 */
   line-height: 1.5; /* 2 */
 }
 
@@ -508,7 +508,7 @@ textarea::placeholder {
 }
 
 button,
-[role='button'] {
+[role="button"] {
   cursor: pointer;
 }
 
@@ -565,8 +565,8 @@ pre,
 code,
 kbd,
 samp {
-  font-family: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
-    'Courier New', monospace;
+  font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
 }
 
 /**
@@ -635,7 +635,7 @@ video {
   max-width: 65ch;
 }
 
-.prose [class~='lead'] {
+.prose [class~="lead"] {
   color: #4a5568;
   font-size: 1.25em;
   line-height: 1.6;
@@ -666,7 +666,7 @@ video {
 }
 
 .prose ol > li::before {
-  content: counter(list-counter) '.';
+  content: counter(list-counter) ".";
   position: absolute;
   font-weight: 400;
   color: #7289da;
@@ -678,7 +678,7 @@ video {
 }
 
 .prose ul > li::before {
-  content: '';
+  content: "";
   position: absolute;
   background-color: #cbd5e0;
   border-radius: 50%;
@@ -701,7 +701,7 @@ video {
   color: #fff;
   border-left-width: 0.25rem;
   border-left-color: #e2e8f0;
-  quotes: '\201C''\201D''\2018''\2019';
+  quotes: "\201C""\201D""\2018""\2019";
   margin-top: 1.6em;
   margin-bottom: 1.6em;
   padding-left: 1em;
@@ -764,11 +764,11 @@ video {
 }
 
 .prose code::before {
-  content: '`';
+  content: "`";
 }
 
 .prose code::after {
-  content: '`';
+  content: "`";
 }
 
 .prose pre {
@@ -799,11 +799,11 @@ video {
 }
 
 .prose pre code::before {
-  content: '';
+  content: "";
 }
 
 .prose pre code::after {
-  content: '';
+  content: "";
 }
 
 .prose table {
@@ -978,7 +978,7 @@ video {
   margin-bottom: 1.1428571em;
 }
 
-.prose-sm [class~='lead'] {
+.prose-sm [class~="lead"] {
   font-size: 1.2857143em;
   line-height: 1.5555556;
   margin-top: 0.8888889em;
@@ -1204,7 +1204,7 @@ video {
   margin-bottom: 1.3333333em;
 }
 
-.prose-lg [class~='lead'] {
+.prose-lg [class~="lead"] {
   font-size: 1.2222222em;
   line-height: 1.4545455;
   margin-top: 1.0909091em;
@@ -1430,7 +1430,7 @@ video {
   margin-bottom: 1.2em;
 }
 
-.prose-xl [class~='lead'] {
+.prose-xl [class~="lead"] {
   font-size: 1.2em;
   line-height: 1.5;
   margin-top: 1em;
@@ -1656,7 +1656,7 @@ video {
   margin-bottom: 1.3333333em;
 }
 
-.prose-2xl [class~='lead'] {
+.prose-2xl [class~="lead"] {
   font-size: 1.25em;
   line-height: 1.4666667;
   margin-top: 1.0666667em;
@@ -2206,7 +2206,7 @@ h1 {
     max-width: 65ch;
   }
 
-  .sm\:prose [class~='lead'] {
+  .sm\:prose [class~="lead"] {
     color: #4a5568;
     font-size: 1.25em;
     line-height: 1.6;
@@ -2237,7 +2237,7 @@ h1 {
   }
 
   .sm\:prose ol > li::before {
-    content: counter(list-counter) '.';
+    content: counter(list-counter) ".";
     position: absolute;
     font-weight: 400;
     color: #7289da;
@@ -2249,7 +2249,7 @@ h1 {
   }
 
   .sm\:prose ul > li::before {
-    content: '';
+    content: "";
     position: absolute;
     background-color: #cbd5e0;
     border-radius: 50%;
@@ -2272,7 +2272,7 @@ h1 {
     color: #fff;
     border-left-width: 0.25rem;
     border-left-color: #e2e8f0;
-    quotes: '\201C''\201D''\2018''\2019';
+    quotes: "\201C""\201D""\2018""\2019";
     margin-top: 1.6em;
     margin-bottom: 1.6em;
     padding-left: 1em;
@@ -2335,11 +2335,11 @@ h1 {
   }
 
   .sm\:prose code::before {
-    content: '`';
+    content: "`";
   }
 
   .sm\:prose code::after {
-    content: '`';
+    content: "`";
   }
 
   .sm\:prose pre {
@@ -2370,11 +2370,11 @@ h1 {
   }
 
   .sm\:prose pre code::before {
-    content: '';
+    content: "";
   }
 
   .sm\:prose pre code::after {
-    content: '';
+    content: "";
   }
 
   .sm\:prose table {
@@ -2549,7 +2549,7 @@ h1 {
     margin-bottom: 1.1428571em;
   }
 
-  .sm\:prose-sm [class~='lead'] {
+  .sm\:prose-sm [class~="lead"] {
     font-size: 1.2857143em;
     line-height: 1.5555556;
     margin-top: 0.8888889em;
@@ -2775,7 +2775,7 @@ h1 {
     margin-bottom: 1.3333333em;
   }
 
-  .sm\:prose-lg [class~='lead'] {
+  .sm\:prose-lg [class~="lead"] {
     font-size: 1.2222222em;
     line-height: 1.4545455;
     margin-top: 1.0909091em;
@@ -3001,7 +3001,7 @@ h1 {
     margin-bottom: 1.2em;
   }
 
-  .sm\:prose-xl [class~='lead'] {
+  .sm\:prose-xl [class~="lead"] {
     font-size: 1.2em;
     line-height: 1.5;
     margin-top: 1em;
@@ -3227,7 +3227,7 @@ h1 {
     margin-bottom: 1.3333333em;
   }
 
-  .sm\:prose-2xl [class~='lead'] {
+  .sm\:prose-2xl [class~="lead"] {
     font-size: 1.25em;
     line-height: 1.4666667;
     margin-top: 1.0666667em;
@@ -3478,12 +3478,16 @@ h1 {
     max-width: 65ch;
   }
 
-  .md\:prose [class~='lead'] {
+  .md\:prose [class~="lead"] {
     color: #4a5568;
     font-size: 1.25em;
     line-height: 1.6;
     margin-top: 1.2em;
     margin-bottom: 1.2em;
+  }
+
+  .pixel {
+    image-rendering: pixelated;
   }
 
   .md\:prose a {
@@ -3509,7 +3513,7 @@ h1 {
   }
 
   .md\:prose ol > li::before {
-    content: counter(list-counter) '.';
+    content: counter(list-counter) ".";
     position: absolute;
     font-weight: 400;
     color: #7289da;
@@ -3521,7 +3525,7 @@ h1 {
   }
 
   .md\:prose ul > li::before {
-    content: '';
+    content: "";
     position: absolute;
     background-color: #cbd5e0;
     border-radius: 50%;
@@ -3544,7 +3548,7 @@ h1 {
     color: #fff;
     border-left-width: 0.25rem;
     border-left-color: #e2e8f0;
-    quotes: '\201C''\201D''\2018''\2019';
+    quotes: "\201C""\201D""\2018""\2019";
     margin-top: 1.6em;
     margin-bottom: 1.6em;
     padding-left: 1em;
@@ -3607,11 +3611,11 @@ h1 {
   }
 
   .md\:prose code::before {
-    content: '`';
+    content: "`";
   }
 
   .md\:prose code::after {
-    content: '`';
+    content: "`";
   }
 
   .md\:prose pre {
@@ -3642,11 +3646,11 @@ h1 {
   }
 
   .md\:prose pre code::before {
-    content: '';
+    content: "";
   }
 
   .md\:prose pre code::after {
-    content: '';
+    content: "";
   }
 
   .md\:prose table {
@@ -3821,7 +3825,7 @@ h1 {
     margin-bottom: 1.1428571em;
   }
 
-  .md\:prose-sm [class~='lead'] {
+  .md\:prose-sm [class~="lead"] {
     font-size: 1.2857143em;
     line-height: 1.5555556;
     margin-top: 0.8888889em;
@@ -4047,7 +4051,7 @@ h1 {
     margin-bottom: 1.3333333em;
   }
 
-  .md\:prose-lg [class~='lead'] {
+  .md\:prose-lg [class~="lead"] {
     font-size: 1.2222222em;
     line-height: 1.4545455;
     margin-top: 1.0909091em;
@@ -4273,7 +4277,7 @@ h1 {
     margin-bottom: 1.2em;
   }
 
-  .md\:prose-xl [class~='lead'] {
+  .md\:prose-xl [class~="lead"] {
     font-size: 1.2em;
     line-height: 1.5;
     margin-top: 1em;
@@ -4499,7 +4503,7 @@ h1 {
     margin-bottom: 1.3333333em;
   }
 
-  .md\:prose-2xl [class~='lead'] {
+  .md\:prose-2xl [class~="lead"] {
     font-size: 1.25em;
     line-height: 1.4666667;
     margin-top: 1.0666667em;
@@ -4750,7 +4754,7 @@ h1 {
     max-width: 65ch;
   }
 
-  .lg\:prose [class~='lead'] {
+  .lg\:prose [class~="lead"] {
     color: #4a5568;
     font-size: 1.25em;
     line-height: 1.6;
@@ -4781,7 +4785,7 @@ h1 {
   }
 
   .lg\:prose ol > li::before {
-    content: counter(list-counter) '.';
+    content: counter(list-counter) ".";
     position: absolute;
     font-weight: 400;
     color: #7289da;
@@ -4793,7 +4797,7 @@ h1 {
   }
 
   .lg\:prose ul > li::before {
-    content: '';
+    content: "";
     position: absolute;
     background-color: #cbd5e0;
     border-radius: 50%;
@@ -4816,7 +4820,7 @@ h1 {
     color: #fff;
     border-left-width: 0.25rem;
     border-left-color: #e2e8f0;
-    quotes: '\201C''\201D''\2018''\2019';
+    quotes: "\201C""\201D""\2018""\2019";
     margin-top: 1.6em;
     margin-bottom: 1.6em;
     padding-left: 1em;
@@ -4879,11 +4883,11 @@ h1 {
   }
 
   .lg\:prose code::before {
-    content: '`';
+    content: "`";
   }
 
   .lg\:prose code::after {
-    content: '`';
+    content: "`";
   }
 
   .lg\:prose pre {
@@ -4914,11 +4918,11 @@ h1 {
   }
 
   .lg\:prose pre code::before {
-    content: '';
+    content: "";
   }
 
   .lg\:prose pre code::after {
-    content: '';
+    content: "";
   }
 
   .lg\:prose table {
@@ -5093,7 +5097,7 @@ h1 {
     margin-bottom: 1.1428571em;
   }
 
-  .lg\:prose-sm [class~='lead'] {
+  .lg\:prose-sm [class~="lead"] {
     font-size: 1.2857143em;
     line-height: 1.5555556;
     margin-top: 0.8888889em;
@@ -5319,7 +5323,7 @@ h1 {
     margin-bottom: 1.3333333em;
   }
 
-  .lg\:prose-lg [class~='lead'] {
+  .lg\:prose-lg [class~="lead"] {
     font-size: 1.2222222em;
     line-height: 1.4545455;
     margin-top: 1.0909091em;
@@ -5545,7 +5549,7 @@ h1 {
     margin-bottom: 1.2em;
   }
 
-  .lg\:prose-xl [class~='lead'] {
+  .lg\:prose-xl [class~="lead"] {
     font-size: 1.2em;
     line-height: 1.5;
     margin-top: 1em;
@@ -5771,7 +5775,7 @@ h1 {
     margin-bottom: 1.3333333em;
   }
 
-  .lg\:prose-2xl [class~='lead'] {
+  .lg\:prose-2xl [class~="lead"] {
     font-size: 1.25em;
     line-height: 1.4666667;
     margin-top: 1.0666667em;
@@ -6022,7 +6026,7 @@ h1 {
     max-width: 65ch;
   }
 
-  .xl\:prose [class~='lead'] {
+  .xl\:prose [class~="lead"] {
     color: #4a5568;
     font-size: 1.25em;
     line-height: 1.6;
@@ -6053,7 +6057,7 @@ h1 {
   }
 
   .xl\:prose ol > li::before {
-    content: counter(list-counter) '.';
+    content: counter(list-counter) ".";
     position: absolute;
     font-weight: 400;
     color: #7289da;
@@ -6065,7 +6069,7 @@ h1 {
   }
 
   .xl\:prose ul > li::before {
-    content: '';
+    content: "";
     position: absolute;
     background-color: #cbd5e0;
     border-radius: 50%;
@@ -6088,7 +6092,7 @@ h1 {
     color: #fff;
     border-left-width: 0.25rem;
     border-left-color: #e2e8f0;
-    quotes: '\201C''\201D''\2018''\2019';
+    quotes: "\201C""\201D""\2018""\2019";
     margin-top: 1.6em;
     margin-bottom: 1.6em;
     padding-left: 1em;
@@ -6151,11 +6155,11 @@ h1 {
   }
 
   .xl\:prose code::before {
-    content: '`';
+    content: "`";
   }
 
   .xl\:prose code::after {
-    content: '`';
+    content: "`";
   }
 
   .xl\:prose pre {
@@ -6186,11 +6190,11 @@ h1 {
   }
 
   .xl\:prose pre code::before {
-    content: '';
+    content: "";
   }
 
   .xl\:prose pre code::after {
-    content: '';
+    content: "";
   }
 
   .xl\:prose table {
@@ -6365,7 +6369,7 @@ h1 {
     margin-bottom: 1.1428571em;
   }
 
-  .xl\:prose-sm [class~='lead'] {
+  .xl\:prose-sm [class~="lead"] {
     font-size: 1.2857143em;
     line-height: 1.5555556;
     margin-top: 0.8888889em;
@@ -6591,7 +6595,7 @@ h1 {
     margin-bottom: 1.3333333em;
   }
 
-  .xl\:prose-lg [class~='lead'] {
+  .xl\:prose-lg [class~="lead"] {
     font-size: 1.2222222em;
     line-height: 1.4545455;
     margin-top: 1.0909091em;
@@ -6817,7 +6821,7 @@ h1 {
     margin-bottom: 1.2em;
   }
 
-  .xl\:prose-xl [class~='lead'] {
+  .xl\:prose-xl [class~="lead"] {
     font-size: 1.2em;
     line-height: 1.5;
     margin-top: 1em;
@@ -7043,7 +7047,7 @@ h1 {
     margin-bottom: 1.3333333em;
   }
 
-  .xl\:prose-2xl [class~='lead'] {
+  .xl\:prose-2xl [class~="lead"] {
     font-size: 1.25em;
     line-height: 1.4666667;
     margin-top: 1.0666667em;

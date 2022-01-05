@@ -1,12 +1,12 @@
-import type { NextPage } from 'next'
-import Head from 'next/head'
-import confetti from 'canvas-confetti'
-import { useEffect, useState } from 'react'
-import Image from 'next/image'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { fas } from '@fortawesome/free-solid-svg-icons'
-import Link from 'next/link'
-import { Tooltip } from '@mui/material'
+import type { NextPage } from "next";
+import Head from "next/head";
+import confetti from "canvas-confetti";
+import { useEffect, useState } from "react";
+import Image from "next/image";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { fas } from "@fortawesome/free-solid-svg-icons";
+import Link from "next/link";
+import { Tooltip } from "@mui/material";
 
 const Home: NextPage = () => {
   useEffect(() => {
@@ -17,8 +17,8 @@ const Home: NextPage = () => {
         x: 0.5,
         y: 0.5
       }
-    })
-  }, [])
+    });
+  }, []);
 
   return (
     <>
@@ -32,7 +32,7 @@ const Home: NextPage = () => {
         <meta property="og:url" content="https://tristansmp.com/" />
         <meta property="og:title" content="Tristan SMP" />
         <meta property="og:description" content="tsmp, a smp for everyone." />
-        <meta property="og:image" content={''} />
+        <meta property="og:image" content={""} />
         {/* Twitter */}
         <meta property="twitter:card" content="summary_large_image" />
         <meta property="twitter:url" content="https://tristansmp.com/" />
@@ -41,7 +41,7 @@ const Home: NextPage = () => {
           property="twitter:description"
           content="tsmp, a smp for everyone."
         />
-        <meta property="twitter:image" content={''} />
+        <meta property="twitter:image" content={""} />
       </Head>
       <div className="text-white">
         {/* Main */}
@@ -51,7 +51,7 @@ const Home: NextPage = () => {
               TristanSMP
             </h1>
             <p className="font-pt-serif font-normal mb-7">
-              {'A Minecraft server for everyone.'}
+              {"A Minecraft server for everyone."}
             </p>
             <div className="font-montserrat">
               <Link href="/join">
@@ -84,7 +84,7 @@ const Home: NextPage = () => {
         </section>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
