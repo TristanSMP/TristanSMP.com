@@ -336,14 +336,27 @@ const Home: NextPage = () => {
                     >
                       <span aria-hidden="true" className="absolute inset-0" />
                       {item.customName.startsWith("TextComponentImpl")
-                        ? `${item.customName.split('"')[1]} ${
-                            item.amount ?? "Unknown Amount"
+                        ? `${
+                            item.amount
+                              ? `${item.amount} x ${
+                                  item.customName.split('"')[1]
+                                }`
+                              : `Unknown Amount x ${
+                                  item.customName.split('"')[1]
+                                }`
                           }`
-                        : `${item.base64
-                            .split(" 😎 ")[1]
-                            .replaceAll("_", " ")} ${
-                            item.amount ?? "Unknown Amount"
-                          }`}
+                        : `
+                          ${
+                            item.amount
+                              ? `${item.amount} x ${item.base64
+                                  .split(" 😎 ")[1]
+                                  .replaceAll("_", " ")}`
+                              : `Unknown Amount x ${item.base64
+                                  .split(" 😎 ")[1]
+                                  .replaceAll("_", " ")}`
+                          }
+                          
+                          `}
                     </a>
                     <br />
                     {item.lore
