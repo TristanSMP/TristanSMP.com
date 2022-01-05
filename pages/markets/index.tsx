@@ -199,7 +199,7 @@ const Home: NextPage = () => {
                             <span className="text-blue-600 font-bold text-2xl">
                               Lore:
                             </span>
-                            {item
+                            {item?.lore
                               ? item.lore.map((lore) => (
                                   <>
                                     <br />
@@ -216,7 +216,7 @@ const Home: NextPage = () => {
                             <span className="text-purple-600 font-bold text-2xl">
                               Enchants:
                             </span>
-                            {item
+                            {item?.enchants
                               ? item.enchants.map((enchant) => (
                                   <>
                                     <br />
