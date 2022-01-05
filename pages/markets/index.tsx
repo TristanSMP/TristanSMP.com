@@ -30,6 +30,8 @@ type MarketItem = {
   lore: string[];
   enchants: string[];
   customName: string;
+  amount: number | null;
+  username: string | null;
 };
 
 export const signOutEvent = new EventEmitter();
@@ -74,11 +76,14 @@ const Home: NextPage = () => {
                       id: doc.id,
                       lore: data.lore,
                       enchants: data.enchants,
-                      customName: data.customName
+                      customName: data.customName,
+                      amount: data.amount,
+                      username: data.username
                     };
                   })
                 )
               );
+
               setLoading(false);
             } else if (change.type === "removed") {
               setItems((items) =>
@@ -331,8 +336,12 @@ const Home: NextPage = () => {
                     >
                       <span aria-hidden="true" className="absolute inset-0" />
                       {item.customName.startsWith("TextComponentImpl")
-                        ? item.customName.split('"')[1]
-                        : item.base64.split(" 😎 ")[1].replaceAll("_", " ")}
+                        ? `${item.customName.split('"')[1]} ${
+                            item.amount ?? "Unknown"
+                          }`
+                        : `${item.base64
+                            .split(" 😎 ")[1]
+                            .replaceAll("_", " ")} ${item.amount ?? "Unknown"}`}
                     </a>
                     <br />
                     {item.lore
@@ -358,7 +367,8 @@ const Home: NextPage = () => {
                   </h3>
                 </div>
                 <p className="text-sm font-medium text-blue-600">
-                  {item.price} Diamonds
+                  {item.price} Diamonds <br /> Sold by{" "}
+                  {item.username ?? "*before we logged usernames*"}
                 </p>
               </div>
             </div>
