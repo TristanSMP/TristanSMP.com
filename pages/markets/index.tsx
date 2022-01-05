@@ -199,40 +199,36 @@ const Home: NextPage = () => {
                             <span className="text-blue-600 font-bold text-2xl">
                               Lore:
                             </span>
-                            {item?.lore ? (
-                              item.lore.map((lore) => (
-                                <>
-                                  <br />
-                                  <span
-                                    key={lore}
-                                    className="text-gray-600 text-2xl"
-                                  >
-                                    <McText>{lore}</McText>
-                                  </span>
-                                </>
-                              ))
-                            ) : (
-                              <>None</>
-                            )}
+                            {item?.lore
+                              ? item.lore.map((lore) => (
+                                  <>
+                                    <br />
+                                    <span
+                                      key={lore}
+                                      className="text-gray-600 text-2xl"
+                                    >
+                                      <McText>{lore}</McText>
+                                    </span>
+                                  </>
+                                ))
+                              : null}
                             <br />
                             <span className="text-purple-600 font-bold text-2xl">
                               Enchants:
                             </span>
-                            {item?.enchants ? (
-                              item.enchants.map((enchant) => (
-                                <>
-                                  <br />
-                                  <span
-                                    key={enchant}
-                                    className="text-2xl text-purple-600"
-                                  >
-                                    {enchant}
-                                  </span>
-                                </>
-                              ))
-                            ) : (
-                              <>None</>
-                            )}
+                            {item?.enchants
+                              ? item.enchants.map((enchant) => (
+                                  <>
+                                    <br />
+                                    <span
+                                      key={enchant}
+                                      className="text-2xl text-purple-600"
+                                    >
+                                      {enchant}
+                                    </span>
+                                  </>
+                                ))
+                              : null}
                           </p>
                         </div>
                       </div>
