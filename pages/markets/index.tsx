@@ -58,10 +58,18 @@ const Home: NextPage = () => {
   useEffect(() => {
     if (items != null) {
       if (search.length > 0 || search == "") {
-        const sortedItems = items.filter((item) =>
-          item.customName.toLowerCase().includes(search.toLowerCase())
-        );
-        setDisplayedItems(sortedItems);
+        if (search.includes("<")) {
+          // sort by cheapest to expensive
+          setDisplayedItems(items.sort((a, b) => a.price - b.price));
+        } else if (search.includes(">")) {
+          // sort by expensive to cheapest
+          setDisplayedItems(items.sort((a, b) => b.price - a.price));
+        } else {
+          const sortedItems = items.filter((item) =>
+            item.customName.toLowerCase().includes(search.toLowerCase())
+          );
+          setDisplayedItems(sortedItems);
+        }
       } else {
         setDisplayedItems(items);
       }
