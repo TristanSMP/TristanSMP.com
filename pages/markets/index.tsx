@@ -427,7 +427,7 @@ const Home: NextPage = () => {
         <br />
         <input
           type="search"
-          placeholder="search"
+          placeholder="What are you looking for today?"
           id="search"
           className="p-2 mx-2 mt-6 bg-white text-black rounded-md placeholder-gray-600"
           onChange={(e) => setSearch(e.target.value)}
