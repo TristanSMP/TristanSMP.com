@@ -429,7 +429,7 @@ const Home: NextPage = () => {
           type="search"
           placeholder="What are you looking for today?"
           id="search"
-          className="p-2 mx-2 mt-6 bg-white text-black rounded-md placeholder-gray-600"
+          className="p-2 mx-2 mt-6 w-96 bg-white text-black rounded-md placeholder-gray-600"
           onChange={(e) => setSearch(e.target.value)}
           value={search}
         />
