@@ -45,6 +45,9 @@ const Home: NextPage = () => {
   const cancelButtonRef = useRef(null);
   const [item, setItem] = useState<MarketItem>();
   const [mainButtonJSX, setMainButtonJSX] = useState<JSX.Element>();
+  const [withdrawButtonJSX, setWithdrawButtonJSX] = useState<JSX.Element>(
+    <>Withdraw Diamonds</>
+  );
   const [diamonds, setDiamonds] = useState(0);
 
   const [loading, setLoading] = useState(true);
@@ -275,9 +278,8 @@ const Home: NextPage = () => {
                                 if (res.data.message == "Item bought") {
                                   setMainButtonJSX(
                                     <>
-                                      Item Bought! <br />
-                                      Type <code>/deliver</code> in-game to get
-                                      your current pending item/items.
+                                      Item Bought! Type /deliver in-game to get
+                                      your diamonds!
                                     </>
                                   );
                                 } else {
@@ -314,7 +316,58 @@ const Home: NextPage = () => {
         <span className="text-4xl font-bold text-white">
           Welcome to the TSMP Market {user.displayName}
           <span className="font-normal">🛍️</span>
-          You have {diamonds} diamonds.
+          <br />
+          You have {diamonds} diamonds. <br />
+          <button
+            type="button"
+            className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
+            onClick={() => {
+              setWithdrawButtonJSX(
+                <>
+                  <div className="flex flex-col items-center justify-center">
+                    <div className="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-blurple drop-shadow-2xl" />
+                  </div>
+                </>
+              );
+              firebaseAuth
+                .getAuth()
+                .currentUser!.getIdToken(true)
+                .then((idToken) => {
+                  axios
+                    .post(
+                      `https://us-central1-tristan-smp.cloudfunctions.net/api/market/withdraw?auth=${idToken}`,
+                      {
+                        headers: {
+                          "Content-Type": "application/json"
+                        }
+                      }
+                    )
+                    .then((res) => {
+                      console.log(res.data.message);
+                      if (res.data.message == "Withdrawal successful") {
+                        setWithdrawButtonJSX(
+                          <>
+                            Withdrawal successful! Type /deliver in-game to get
+                            your diamonds!
+                          </>
+                        );
+                      } else {
+                        setWithdrawButtonJSX(
+                          <>{res.data.message ?? "Error"}</>
+                        );
+                      }
+                    })
+                    .catch((err: AxiosError) => {
+                      console.log(err.response?.data.error);
+                      setWithdrawButtonJSX(
+                        <>{err.response?.data.error ?? "Error"}</>
+                      );
+                    });
+                });
+            }}
+          >
+            {withdrawButtonJSX}
+          </button>
         </span>
         <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
           {items!.map((item) => (
