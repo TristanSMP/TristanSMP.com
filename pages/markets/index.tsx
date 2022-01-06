@@ -41,6 +41,8 @@ const Home: NextPage = () => {
   const [user, setUser] = useState<User | null>(null);
   const [items, setItems] = useState<MarketItem[]>();
 
+  const [displayedItems, setDisplayedItems] = useState<MarketItem[]>([]);
+
   const [open, setOpen] = useState(false);
   const cancelButtonRef = useRef(null);
   const [item, setItem] = useState<MarketItem>();
@@ -49,8 +51,23 @@ const Home: NextPage = () => {
     <>Withdraw Diamonds</>
   );
   const [diamonds, setDiamonds] = useState(0);
-
   const [loading, setLoading] = useState(true);
+
+  const [search, setSearch] = useState("");
+
+  useEffect(() => {
+    if (items != null) {
+      if (search.length > 0 || search == "") {
+        const sortedItems = items.filter((item) =>
+          item.customName.toLowerCase().includes(search.toLowerCase())
+        );
+        setDisplayedItems(sortedItems);
+      } else {
+        setDisplayedItems(items);
+      }
+    }
+  }, [search, items]);
+
   useEffect(() => {
     signOutEvent.addListener("signout", function () {
       setUser(null);
@@ -377,9 +394,21 @@ const Home: NextPage = () => {
             </button>
           </Link>
         </span>
+        <br />
+        <input
+          type="search"
+          placeholder="search"
+          id="search"
+          className="p-2 mx-2 mt-6 bg-white text-black rounded-md placeholder-gray-600"
+          onChange={(e) => setSearch(e.target.value)}
+          value={search}
+        />
         <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-          {items!.map((item) => (
-            <div key={item.base64} className="group relative">
+          {displayedItems!.map((item) => (
+            <div
+              key={item.base64 + (Math.random() + 1).toString(36).substring(7)}
+              className="group relative"
+            >
               <div className="w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none">
                 <Item
                   className="w-2/4 h-2/4 object-center object-cover lg:w-full lg:h-full bg-purple-300"
