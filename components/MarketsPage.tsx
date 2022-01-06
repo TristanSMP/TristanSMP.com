@@ -4,6 +4,7 @@ import Head from "next/head";
 import React from "react";
 import Image from "next/image";
 import { Item } from "./Item";
+import Link from "next/link";
 
 export function MarketsPage() {
   return (
@@ -47,9 +48,14 @@ export function MarketsPage() {
               Markets 🛒!
             </span>
           </h1>
-          <div className="max-w-lg mx-auto mt-6 text-sm text-center text-indigo-200 md:mt-12 sm:text-base md:max-w-xl md:text-lg xl:text-xl">
-            think of this as like eBay but for items on the smp.
-          </div>
+          <Link href="/info/markets">
+            <button
+              type="button"
+              className="w-full mt-6 inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
+            >
+              What is this?
+            </button>
+          </Link>
           <div className="mt-12">
             <a
               href="/markets/login"
