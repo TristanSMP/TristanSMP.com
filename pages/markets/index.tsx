@@ -65,7 +65,7 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     if (items != null) {
-      if (search.length > 0 || search != "") {
+      if (search != "") {
         const sortedItems = items.filter((item) =>
           item.customName.toLowerCase().includes(search.toLowerCase())
         );
