@@ -88,6 +88,7 @@ const Home: NextPage = () => {
         const q = query(collection(fstore, "market"));
 
         onSnapshot(doc(fstore, "users", user.uid), (snapshot) => {
+          setWithdrawButtonJSX(<>Withdraw Diamonds</>);
           return setDiamonds(snapshot.data()?.diamonds ?? 0);
         });
 
@@ -393,6 +394,14 @@ const Home: NextPage = () => {
           >
             {withdrawButtonJSX}
           </button>
+          <Link href="/info/markets">
+            <button
+              type="button"
+              className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
+            >
+              Deposit Diamonds
+            </button>
+          </Link>
           <Link href="/info/markets">
             <button
               type="button"
