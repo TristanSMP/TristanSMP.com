@@ -94,6 +94,8 @@ const Login: NextPage = () => {
                               then type{" "}
                               <code>
                                 /tsmpsignup &#60;email&#62; &#60;password&#62;
+                                (if you don't want to give us your email sign up
+                                with &#62;username&#62;@p.tristansmp.com)
                               </code>
                               <br />
                               <br />
