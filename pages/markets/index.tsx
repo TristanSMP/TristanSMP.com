@@ -52,13 +52,16 @@ const Home: NextPage = () => {
 
   const [search, setSearch] = useState("");
   const [sortOptions, setSortOptions] = useState([
-    { name: "Price: Low to High", href: "#", current: true },
-    { name: "Price: High to Low", href: "#", current: false }
+    { name: "Price: Low to High", current: false },
+    { name: "Price: High to Low", current: false },
+    { name: "Random", current: true }
   ]);
 
   function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(" ");
   }
+
+  const randomInt = useRef(Math.random());
 
   useEffect(() => {
     if (items != null) {
@@ -70,6 +73,8 @@ const Home: NextPage = () => {
           setDisplayedItems(sortedItems.sort((a, b) => a.price - b.price));
         } else if (sortOptions[1].current) {
           setDisplayedItems(sortedItems.sort((a, b) => b.price - a.price));
+        } else if (sortOptions[2].current) {
+          setDisplayedItems(sortedItems.sort(() => 0.5 - randomInt.current));
         }
       } else {
         const sortedItems = items;
@@ -77,6 +82,8 @@ const Home: NextPage = () => {
           setDisplayedItems(sortedItems.sort((a, b) => a.price - b.price));
         } else if (sortOptions[1].current) {
           setDisplayedItems(sortedItems.sort((a, b) => b.price - a.price));
+        } else if (sortOptions[2].current) {
+          setDisplayedItems(sortedItems.sort(() => 0.5 - randomInt.current));
         }
       }
     }
