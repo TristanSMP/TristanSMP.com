@@ -1,27 +1,24 @@
-import type { NextPage } from "next";
-import Head from "next/head";
-import { Fragment, useEffect, useRef, useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faDiscord } from "@fortawesome/free-brands-svg-icons";
-import Image from "next/image";
-import { MarketsPage } from "../../components/MarketsPage";
-import { fauth, firebaseAuth, firestore } from "../../utils";
-import { EventEmitter } from "fbemitter";
 import { User } from "@firebase/auth";
-import { Item } from "../../components/Item";
+import { Dialog, Menu, Transition } from "@headlessui/react";
+import { BadgeCheckIcon, ChevronDownIcon } from "@heroicons/react/outline";
+import axios, { AxiosError } from "axios";
+import { EventEmitter } from "fbemitter";
 import {
-  query,
   collection,
+  doc,
   getDocs,
   onSnapshot,
-  doc
+  query
 } from "firebase/firestore";
-import axios, { AxiosError } from "axios";
-import { Dialog, Transition } from "@headlessui/react";
-import { BadgeCheckIcon, ExclamationIcon } from "@heroicons/react/outline";
 // @ts-expect-error
 import McText from "mctext-react";
+import type { NextPage } from "next";
+import Head from "next/head";
 import Link from "next/link";
+import { Fragment, useEffect, useRef, useState } from "react";
+import { Item } from "../../components/Item";
+import { MarketsPage } from "../../components/MarketsPage";
+import { fauth, firebaseAuth, firestore } from "../../utils";
 
 type MarketItem = {
   base64: string;
@@ -54,27 +51,36 @@ const Home: NextPage = () => {
   const [loading, setLoading] = useState(true);
 
   const [search, setSearch] = useState("");
+  const [sortOptions, setSortOptions] = useState([
+    { name: "Price: Low to High", href: "#", current: true },
+    { name: "Price: High to Low", href: "#", current: false }
+  ]);
+
+  function classNames(...classes: string[]) {
+    return classes.filter(Boolean).join(" ");
+  }
 
   useEffect(() => {
     if (items != null) {
-      if (search.length > 0 || search == "") {
-        if (search.includes("<")) {
-          // sort by cheapest to expensive
-          setDisplayedItems(items.sort((a, b) => a.price - b.price));
-        } else if (search.includes(">")) {
-          // sort by expensive to cheapest
-          setDisplayedItems(items.sort((a, b) => b.price - a.price));
-        } else {
-          const sortedItems = items.filter((item) =>
-            item.customName.toLowerCase().includes(search.toLowerCase())
-          );
-          setDisplayedItems(sortedItems);
+      if (search.length > 0 || search != "") {
+        const sortedItems = items.filter((item) =>
+          item.customName.toLowerCase().includes(search.toLowerCase())
+        );
+        if (sortOptions[0].current) {
+          setDisplayedItems(sortedItems.sort((a, b) => a.price - b.price));
+        } else if (sortOptions[1].current) {
+          setDisplayedItems(sortedItems.sort((a, b) => b.price - a.price));
         }
       } else {
-        setDisplayedItems(items);
+        const sortedItems = items;
+        if (sortOptions[0].current) {
+          setDisplayedItems(sortedItems.sort((a, b) => a.price - b.price));
+        } else if (sortOptions[1].current) {
+          setDisplayedItems(sortedItems.sort((a, b) => b.price - a.price));
+        }
       }
     }
-  }, [search, items]);
+  }, [search, items, sortOptions]);
 
   useEffect(() => {
     signOutEvent.addListener("signout", function () {
@@ -420,6 +426,75 @@ const Home: NextPage = () => {
           onChange={(e) => setSearch(e.target.value)}
           value={search}
         />
+        <div className="relative z-10 flex items-baseline justify-between pt-24 pb-6 border-b border-gray-200">
+          <h1 className="text-4xl font-extrabold tracking-tight text-white">
+            {`${
+              sortOptions.find((option) => option.current === true)?.name ??
+              "Unknown Sort"
+            } - ${items?.length ?? 0} items`}
+          </h1>
+          <div className="flex items-center">
+            <Menu as="div" className="relative inline-block text-left">
+              <div>
+                <Menu.Button className="group inline-flex justify-center text-sm font-medium text-white hover:text-blue-900">
+                  Sort
+                  <ChevronDownIcon
+                    className="flex-shrink-0 -mr-1 ml-1 h-5 w-5 text-gray-400 group-hover:text-gray-500"
+                    aria-hidden="true"
+                  />
+                </Menu.Button>
+              </div>
+              <Transition
+                as={Fragment}
+                enter="transition ease-out duration-100"
+                enterFrom="transform opacity-0 scale-95"
+                enterTo="transform opacity-100 scale-100"
+                leave="transition ease-in duration-75"
+                leaveFrom="transform opacity-100 scale-100"
+                leaveTo="transform opacity-0 scale-95"
+              >
+                <Menu.Items className="origin-top-right absolute right-0 mt-2 w-40 rounded-md shadow-2xl bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                  <div className="py-1 cursor-pointer">
+                    {sortOptions.map((option) => (
+                      <Menu.Item key={option.name}>
+                        {({ active }) => (
+                          <a
+                            onClick={() => {
+                              setSortOptions(
+                                sortOptions.map((options) => {
+                                  if (option.name === options.name) {
+                                    return {
+                                      ...options,
+                                      current: true
+                                    };
+                                  } else {
+                                    return {
+                                      ...options,
+                                      current: false
+                                    };
+                                  }
+                                })
+                              );
+                            }}
+                            className={classNames(
+                              option.current
+                                ? "font-medium text-gray-900"
+                                : "text-gray-500",
+                              active ? "bg-gray-100" : "",
+                              "block px-4 py-2 text-sm"
+                            )}
+                          >
+                            {option.name}
+                          </a>
+                        )}
+                      </Menu.Item>
+                    ))}
+                  </div>
+                </Menu.Items>
+              </Transition>
+            </Menu>
+          </div>
+        </div>
         <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
           {displayedItems!.map((item) => (
             <div
