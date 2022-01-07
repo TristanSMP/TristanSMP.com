@@ -488,7 +488,7 @@ const Home: NextPage = () => {
             </li>
             <li>
               Enchantment Books sold on the market after today will now show the
-              enchants. (the underscore will be removed btw)
+              enchants.
             </li>
           </ul>
         </span>
