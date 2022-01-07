@@ -166,7 +166,7 @@ const Home: NextPage = () => {
         />
         {/* Open Graph / Facebook */}
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://tristansmp.com/stats" />
+        <meta property="og:url" content="https://tristansmp.com/markets" />
         <meta property="og:title" content="TSMP Market" />
         <meta
           property="og:description"
@@ -175,7 +175,7 @@ const Home: NextPage = () => {
         <meta property="og:image" content={""} />
         {/* Twitter */}
         <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:url" content="https://tristansmp.com/stats" />
+        <meta property="twitter:url" content="https://tristansmp.com/markets" />
         <meta
           property="twitter:title"
           content="Buy & Auction Items on the TSMP Market."
