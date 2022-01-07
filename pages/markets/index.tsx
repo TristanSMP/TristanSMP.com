@@ -30,6 +30,7 @@ type MarketItem = {
   customName: string;
   amount: number | null;
   username: string | null;
+  insideshulker: string[] | null;
 };
 
 export const signOutEvent = new EventEmitter();
@@ -126,7 +127,8 @@ const Home: NextPage = () => {
                       enchants: data.enchants,
                       customName: data.customName,
                       amount: data.amount,
-                      username: data.username
+                      username: data.username,
+                      insideshulker: data.insideshulker
                     };
                   })
                 )
@@ -251,11 +253,14 @@ const Home: NextPage = () => {
                             </span>
                             <br />
                             <br />
-                            <span className="text-blue-600 font-bold text-2xl">
-                              Lore:
-                            </span>
-                            {item?.lore
-                              ? item.lore.map((lore) => (
+                            {item?.lore ? (
+                              <span className="text-blue-600 font-bold text-2xl">
+                                Lore:
+                              </span>
+                            ) : null}
+                            {item?.lore ? (
+                              <>
+                                {item.lore.map((lore) => (
                                   <>
                                     <br />
                                     <span
@@ -265,14 +270,18 @@ const Home: NextPage = () => {
                                       <McText>{lore}</McText>
                                     </span>
                                   </>
-                                ))
-                              : null}
-                            <br />
-                            <span className="text-purple-600 font-bold text-2xl">
-                              Enchants:
-                            </span>
-                            {item?.enchants
-                              ? item.enchants.map((enchant) => (
+                                ))}
+                                <br />
+                              </>
+                            ) : null}
+                            {item?.enchants != [] ? null : (
+                              <span className="text-purple-600 font-bold text-2xl">
+                                Enchants:
+                              </span>
+                            )}
+                            {item?.enchants ? (
+                              <>
+                                {item.enchants.map((enchant) => (
                                   <>
                                     <br />
                                     <span
@@ -280,6 +289,26 @@ const Home: NextPage = () => {
                                       className="text-2xl text-purple-600"
                                     >
                                       {enchant}
+                                    </span>
+                                  </>
+                                ))}
+                                <br />
+                              </>
+                            ) : null}
+                            {item?.insideshulker ? (
+                              <span className="text-blue-600 font-bold text-2xl">
+                                Inside of shulker:
+                              </span>
+                            ) : null}
+                            {item?.insideshulker
+                              ? item.insideshulker.map((inside) => (
+                                  <>
+                                    <br />
+                                    <span
+                                      key={inside}
+                                      className="text-blue-600 text-2xl"
+                                    >
+                                      {inside.replaceAll("_", " ")}
                                     </span>
                                   </>
                                 ))
