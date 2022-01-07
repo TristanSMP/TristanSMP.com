@@ -61,6 +61,15 @@ const Home: NextPage = () => {
     return classes.filter(Boolean).join(" ");
   }
 
+  function setSortMode(mode: string) {
+    setSortOptions(
+      sortOptions.map((option) => {
+        option.current = option.name === mode;
+        return option;
+      })
+    );
+  }
+
   const randomInt = useRef(Math.random());
 
   useEffect(() => {
@@ -467,21 +476,7 @@ const Home: NextPage = () => {
                         {({ active }) => (
                           <a
                             onClick={() => {
-                              setSortOptions(
-                                sortOptions.map((options) => {
-                                  if (option.name === options.name) {
-                                    return {
-                                      ...options,
-                                      current: true
-                                    };
-                                  } else {
-                                    return {
-                                      ...options,
-                                      current: false
-                                    };
-                                  }
-                                })
-                              );
+                              setSortMode(option.name);
                             }}
                             className={classNames(
                               option.current
