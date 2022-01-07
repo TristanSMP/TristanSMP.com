@@ -79,12 +79,14 @@ const Home: NextPage = () => {
         const sortedItems = items.filter(
           (item) =>
             item.customName.toLowerCase().includes(search.toLowerCase()) ||
-            item.lore.some((lore) =>
-              lore.toLowerCase().includes(search.toLowerCase())
-            ) ||
-            item.enchants.some((enchant) =>
-              enchant.toLowerCase().includes(search.toLowerCase())
-            ) ||
+            (item.lore != null &&
+              item.lore.some((lore) =>
+                lore.toLowerCase().includes(search.toLowerCase())
+              )) ||
+            (item.enchants != [] &&
+              item.enchants.some((enchant) =>
+                enchant.toLowerCase().includes(search.toLowerCase())
+              )) ||
             (item.insideshulker != null &&
               item.insideshulker.includes(search.toLowerCase()))
         );
