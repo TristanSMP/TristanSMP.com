@@ -274,7 +274,7 @@ const Home: NextPage = () => {
                                 <br />
                               </>
                             ) : null}
-                            {item?.enchants != [] ? null : (
+                            {item?.enchants == [] ? null : (
                               <span className="text-purple-600 font-bold text-2xl">
                                 Enchants:
                               </span>
