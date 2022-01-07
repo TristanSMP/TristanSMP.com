@@ -288,7 +288,7 @@ const Home: NextPage = () => {
                                       key={enchant}
                                       className="text-2xl text-purple-600"
                                     >
-                                      {enchant}
+                                      {enchant.replaceAll("_", " ")}
                                     </span>
                                   </>
                                 ))}
