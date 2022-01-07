@@ -99,10 +99,6 @@ const Home: NextPage = () => {
   }, [search, items, sortOptions]);
 
   useEffect(() => {
-    signOutEvent.addListener("signout", function () {
-      setUser(null);
-    });
-
     fauth.onAuthStateChanged(async (user) => {
       if (user) {
         const fstore = firestore.getFirestore();
@@ -148,7 +144,7 @@ const Home: NextPage = () => {
         setLoading(false);
       }
     });
-  }, [user]);
+  }, []);
 
   while (loading) {
     return (
