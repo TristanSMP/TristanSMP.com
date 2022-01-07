@@ -633,6 +633,9 @@ const Home: NextPage = () => {
         <br />
         The item icons are owned by Mojang Studios. This project is not
         affiliated with Mojang Studios.
+        <br />
+        Fun Fact: When searching for items, it queries your search for lore,
+        item name, inside of shulker boxes and enchantments.
       </section>
     </>
   ) : (
