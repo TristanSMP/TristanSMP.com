@@ -468,10 +468,11 @@ const Home: NextPage = () => {
           value={search}
         />
         <span className="text-2xl font-bold text-white">
+          Update:
           <ul>
             <li>
-              Update: Shulker boxes that haven't been colored will now show the
-              insides of it. (this is so people can still make mystery boxes)
+              Shulker boxes that haven't been coloured will now show the insides
+              of it. (this is so people can still make mystery boxes)
             </li>
             <li>
               Enchantment Books sold on the market after today will now show the
