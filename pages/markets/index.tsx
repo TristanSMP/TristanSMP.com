@@ -76,8 +76,15 @@ const Home: NextPage = () => {
   useEffect(() => {
     if (items != null) {
       if (search != "") {
-        const sortedItems = items.filter((item) =>
-          item.customName.toLowerCase().includes(search.toLowerCase())
+        const sortedItems = items.filter(
+          (item) =>
+            item.customName.toLowerCase().includes(search.toLowerCase()) ||
+            item.lore.some((lore) =>
+              lore.toLowerCase().includes(search.toLowerCase())
+            ) ||
+            item.enchants.some((enchant) =>
+              enchant.toLowerCase().includes(search.toLowerCase())
+            )
         );
         if (sortOptions[0].current) {
           setDisplayedItems(sortedItems.sort((a, b) => a.price - b.price));
