@@ -7,8 +7,7 @@ module.exports = withNextra({
     return [
       {
         source: "/imagine-griefing",
-        destination:
-          "https://cdn.discordapp.com/attachments/871528894623273000/917328471213084722/imagine_griefing.mp4",
+        destination: "https://youtu.be/5R5LpLc315o",
         permanent: true
       }
     ];
