@@ -476,7 +476,8 @@ const Home: NextPage = () => {
           onChange={(e) => setSearch(e.target.value)}
           value={search}
         />
-        <span className="text-2xl font-bold text-white">
+        <br />
+        <span className="text-sm font-bold text-white">
           Update:
           <ul>
             <li>
