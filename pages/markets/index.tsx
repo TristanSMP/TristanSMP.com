@@ -443,7 +443,7 @@ const Home: NextPage = () => {
             {`${
               sortOptions.find((option) => option.current === true)?.name ??
               "Unknown Sort"
-            } - ${items?.length ?? 0} items`}
+            } - ${displayedItems?.length ?? 0} items`}
           </h1>
           <div className="flex items-center">
             <Menu as="div" className="relative inline-block text-left">
