@@ -84,7 +84,9 @@ const Home: NextPage = () => {
             ) ||
             item.enchants.some((enchant) =>
               enchant.toLowerCase().includes(search.toLowerCase())
-            )
+            ) ||
+            (item.insideshulker != null &&
+              item.insideshulker.includes(search.toLowerCase()))
         );
         if (sortOptions[0].current) {
           setDisplayedItems(sortedItems.sort((a, b) => a.price - b.price));
