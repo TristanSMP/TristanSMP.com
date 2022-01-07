@@ -467,6 +467,18 @@ const Home: NextPage = () => {
           onChange={(e) => setSearch(e.target.value)}
           value={search}
         />
+        <span className="text-2xl font-bold text-white">
+          <ul>
+            <li>
+              Update: Shulker boxes that haven't been colored will now show the
+              insides of it. (this is so people can still make mystery boxes)
+            </li>
+            <li>
+              Enchantment Books sold on the market after today will now show the
+              enchants. (the underscore will be removed btw)
+            </li>
+          </ul>
+        </span>
         <div className="relative z-10 flex items-baseline justify-between pt-24 pb-6 border-b border-gray-200">
           <h1 className="text-4xl font-extrabold tracking-tight text-white">
             {`${
