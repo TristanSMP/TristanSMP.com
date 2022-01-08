@@ -6,6 +6,7 @@ import { EventEmitter } from "fbemitter";
 import {
   collection,
   doc,
+  getDoc,
   getDocs,
   onSnapshot,
   query
@@ -15,6 +16,7 @@ import McText from "mctext-react";
 import type { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
+import Router from "next/router";
 import { Fragment, useEffect, useRef, useState } from "react";
 import { Item } from "../../components/Item";
 import { MarketsPage } from "../../components/MarketsPage";
@@ -33,17 +35,11 @@ type MarketItem = {
   insideshulker: string[] | null;
 };
 
-export const signOutEvent = new EventEmitter();
-
-const Home: NextPage = () => {
+const ItemID: NextPage = () => {
   const [user, setUser] = useState<User | null>(null);
-  const [items, setItems] = useState<MarketItem[]>();
-
-  const [displayedItems, setDisplayedItems] = useState<MarketItem[]>([]);
-
+  const [item, setItem] = useState<MarketItem | null>();
   const [open, setOpen] = useState(false);
   const cancelButtonRef = useRef(null);
-  const [item, setItem] = useState<MarketItem>();
   const [mainButtonJSX, setMainButtonJSX] = useState<JSX.Element>();
   const [withdrawButtonJSX, setWithdrawButtonJSX] = useState<JSX.Element>(
     <>Withdraw Diamonds</>
@@ -51,108 +47,28 @@ const Home: NextPage = () => {
   const [diamonds, setDiamonds] = useState(0);
   const [loading, setLoading] = useState(true);
 
-  const [search, setSearch] = useState("");
-  const [sortOptions, setSortOptions] = useState([
-    { name: "Price: Low to High", current: false },
-    { name: "Price: High to Low", current: false },
-    { name: "Random", current: true }
-  ]);
-
-  function classNames(...classes: string[]) {
-    return classes.filter(Boolean).join(" ");
-  }
-
-  function setSortMode(mode: string) {
-    setSortOptions(
-      sortOptions.map((option) => {
-        option.current = option.name === mode;
-        return option;
-      })
-    );
-  }
-
-  const randomInt = useRef(Math.random());
-
-  useEffect(() => {
-    if (items != null) {
-      if (search != "") {
-        const sortedItems = items.filter(
-          (item) =>
-            item.customName.toLowerCase().includes(search.toLowerCase()) ||
-            (item.lore != null &&
-              item.lore.some((lore) =>
-                lore.toLowerCase().includes(search.toLowerCase())
-              )) ||
-            (item.enchants != [] &&
-              item.enchants.some((enchant) =>
-                enchant.toLowerCase().includes(search.toLowerCase())
-              )) ||
-            (item.insideshulker != null &&
-              item.insideshulker.includes(search.toLowerCase()))
-        );
-        if (sortOptions[0].current) {
-          setDisplayedItems(sortedItems.sort((a, b) => a.price - b.price));
-        } else if (sortOptions[1].current) {
-          setDisplayedItems(sortedItems.sort((a, b) => b.price - a.price));
-        } else if (sortOptions[2].current) {
-          setDisplayedItems(sortedItems.sort(() => 0.5 - randomInt.current));
-        }
-      } else {
-        const sortedItems = items;
-        if (sortOptions[0].current) {
-          setDisplayedItems(sortedItems.sort((a, b) => a.price - b.price));
-        } else if (sortOptions[1].current) {
-          setDisplayedItems(sortedItems.sort((a, b) => b.price - a.price));
-        } else if (sortOptions[2].current) {
-          setDisplayedItems(sortedItems.sort(() => 0.5 - randomInt.current));
-        }
-      }
-    }
-  }, [search, items, sortOptions]);
-
   useEffect(() => {
     fauth.onAuthStateChanged(async (user) => {
       if (user) {
         const fstore = firestore.getFirestore();
         setUser(user);
-        const q = query(collection(fstore, "market"));
 
         onSnapshot(doc(fstore, "users", user.uid), (snapshot) => {
           setWithdrawButtonJSX(<>Withdraw Diamonds</>);
           return setDiamonds(snapshot.data()?.diamonds ?? 0);
         });
+        const itemID = Router.query.itemid;
 
-        const unsub = onSnapshot(q, (snapshot) => {
-          snapshot.docChanges().forEach(async (change) => {
-            if (change.type === "added") {
-              setItems(
-                await getDocs(q).then((docs) =>
-                  docs.docs.map((doc) => {
-                    const data = doc.data();
-                    return {
-                      base64: data.base64,
-                      price: data.price,
-                      seller: data.seller,
-                      id: doc.id,
-                      lore: data.lore,
-                      enchants: data.enchants,
-                      customName: data.customName,
-                      amount: data.amount,
-                      username: data.username,
-                      insideshulker: data.insideshulker
-                    };
-                  })
-                )
-              );
-
-              setLoading(false);
-            } else if (change.type === "removed") {
-              setItems((items) =>
-                items!.filter((item) => item.id !== change.doc.id)
-              );
-            }
-          });
-        });
+        const docRef = doc(fstore, "market", itemID!.toString());
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          const data = docSnap.data() as MarketItem;
+          data.id = docSnap.id;
+          setItem(data);
+          setLoading(false);
+        } else {
+          Router.push("/market");
+        }
       } else {
         setLoading(false);
       }
@@ -401,8 +317,14 @@ const Home: NextPage = () => {
           </Dialog>
         </Transition.Root>
         <span className="text-4xl font-bold text-white">
-          Welcome to the TSMP Market {user.displayName}
-          <span className="font-normal">🛍️</span>
+          Hey, {user.displayName}! This is a single item on the market.
+          <br />
+          To view the rest of the market click{" "}
+          <Link href="/market">
+            <span className="underline cursor-pointer hover:text-blue-400">
+              here
+            </span>
+          </Link>
           <br />
           You have {diamonds} diamonds. <br />
           <button
@@ -473,164 +395,84 @@ const Home: NextPage = () => {
           </Link>
         </span>
         <br />
-        <input
-          type="search"
-          placeholder="What are you looking for today?"
-          id="search"
-          className="p-2 mx-2 mt-6 w-96 bg-white text-black rounded-md placeholder-gray-600"
-          onChange={(e) => setSearch(e.target.value)}
-          value={search}
-        />
-        <br />
-        <span className="text-sm font-bold text-white">
-          Update:
-          <ul>
-            <li>
-              Shulker boxes that haven't been coloured & are sold after 7/01/22
-              will now show the insides of it. (this is so people can still make
-              mystery boxes)
-            </li>
-            <li>
-              Enchantment Books sold on the market after 7/01/22 will now show
-              the enchants.
-            </li>
-          </ul>
-        </span>
-        <div className="relative z-10 flex items-baseline justify-between pt-24 pb-6 border-b border-gray-200">
-          <h1 className="text-4xl font-extrabold tracking-tight text-white">
-            {`${
-              sortOptions.find((option) => option.current === true)?.name ??
-              "Unknown Sort"
-            } - ${displayedItems?.length ?? 0} items`}
-          </h1>
-          <div className="flex items-center">
-            <Menu as="div" className="relative inline-block text-left">
-              <div>
-                <Menu.Button className="group inline-flex justify-center text-sm font-medium text-white hover:text-blue-900">
-                  Sort
-                  <ChevronDownIcon
-                    className="flex-shrink-0 -mr-1 ml-1 h-5 w-5 text-gray-400 group-hover:text-gray-500"
-                    aria-hidden="true"
-                  />
-                </Menu.Button>
-              </div>
-              <Transition
-                as={Fragment}
-                enter="transition ease-out duration-100"
-                enterFrom="transform opacity-0 scale-95"
-                enterTo="transform opacity-100 scale-100"
-                leave="transition ease-in duration-75"
-                leaveFrom="transform opacity-100 scale-100"
-                leaveTo="transform opacity-0 scale-95"
-              >
-                <Menu.Items className="origin-top-right absolute right-0 mt-2 w-40 rounded-md shadow-2xl bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
-                  <div className="py-1 cursor-pointer">
-                    {sortOptions.map((option) => (
-                      <Menu.Item key={option.name}>
-                        {({ active }) => (
-                          <a
-                            onClick={() => {
-                              setSortMode(option.name);
-                            }}
-                            className={classNames(
-                              option.current
-                                ? "font-medium text-gray-900"
-                                : "text-gray-500",
-                              active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm"
-                            )}
-                          >
-                            {option.name}
-                          </a>
-                        )}
-                      </Menu.Item>
-                    ))}
-                  </div>
-                </Menu.Items>
-              </Transition>
-            </Menu>
-          </div>
-        </div>
         <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-          {displayedItems!.map((item) => (
-            <div
-              key={item.base64 + (Math.random() + 1).toString(36).substring(7)}
-              className="group relative"
-            >
-              <div className="w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none">
-                <Item
-                  className="w-2/4 h-2/4 object-center object-cover lg:w-full lg:h-full bg-purple-300"
-                  id={`minecraft:${item.base64.split(" 😎 ")[1].toLowerCase()}`}
-                />
-              </div>
-              <div className="mt-4 flex justify-between">
-                <div>
-                  <h3 className="text-sm text-white font-semibold">
-                    <a
-                      onClick={() => {
-                        setItem(item);
-                        setMainButtonJSX(<>Buy!</>);
-                        setOpen(true);
-                      }}
-                    >
-                      <span aria-hidden="true" className="absolute inset-0" />
-                      {item.customName.startsWith("TextComponentImpl")
-                        ? `${
-                            item.amount
-                              ? `${item.amount} x ${
-                                  item.customName.split('"')[1]
-                                }`
-                              : `Unknown Amount x ${
-                                  item.customName.split('"')[1]
-                                }`
-                          }`
-                        : `
+          <div
+            key={item!.base64 + (Math.random() + 1).toString(36).substring(7)}
+            className="group relative"
+          >
+            <div className="w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none">
+              <Item
+                className="w-2/4 h-2/4 object-center object-cover lg:w-full lg:h-full bg-purple-300"
+                id={`minecraft:${item!.base64.split(" 😎 ")[1].toLowerCase()}`}
+              />
+            </div>
+            <div className="mt-4 flex justify-between">
+              <div>
+                <h3 className="text-sm text-white font-semibold">
+                  <a
+                    onClick={() => {
+                      setItem(item);
+                      setMainButtonJSX(<>Buy!</>);
+                      setOpen(true);
+                    }}
+                  >
+                    <span aria-hidden="true" className="absolute inset-0" />
+                    {item!.customName.startsWith("TextComponentImpl")
+                      ? `${
+                          item!.amount
+                            ? `${item!.amount} x ${
+                                item!.customName.split('"')[1]
+                              }`
+                            : `Unknown Amount x ${
+                                item!.customName.split('"')[1]
+                              }`
+                        }`
+                      : `
                           ${
-                            item.amount
-                              ? `${item.amount} x ${item.base64
+                            item!.amount
+                              ? `${item!.amount} x ${item!.base64
                                   .split(" 😎 ")[1]
                                   .replaceAll("_", " ")}`
-                              : `Unknown Amount x ${item.base64
+                              : `Unknown Amount x ${item!.base64
                                   .split(" 😎 ")[1]
                                   .replaceAll("_", " ")}`
                           }
                           
                           `}
-                    </a>
-                    <br />
-                    {item.lore
-                      ? item.lore.map((lore) => (
-                          <span key={lore} className="text-sm text-gray-600">
-                            <McText>{lore}</McText>
+                  </a>
+                  <br />
+                  {item!.lore
+                    ? item!.lore.map((lore) => (
+                        <span key={lore} className="text-sm text-gray-600">
+                          <McText>{lore}</McText>
+                        </span>
+                      ))
+                    : null}
+                  {item!.enchants
+                    ? item!.enchants.map((enchant) => (
+                        <>
+                          <br />
+                          <span
+                            key={enchant}
+                            className="text-sm text-purple-600"
+                          >
+                            {enchant}
                           </span>
-                        ))
-                      : null}
-                    {item.enchants
-                      ? item.enchants.map((enchant) => (
-                          <>
-                            <br />
-                            <span
-                              key={enchant}
-                              className="text-sm text-purple-600"
-                            >
-                              {enchant}
-                            </span>
-                          </>
-                        ))
-                      : null}
-                  </h3>
-                </div>
-                <p className="text-sm font-medium text-blue-600">
-                  <span className="text-sm font-bold text-blue-400">
-                    {item.price} Diamonds <br />
-                  </span>
-                  <span className="text-sm font-medium text-gray-300">
-                    Sold by {item.username ?? "*before we logged usernames*"}
-                  </span>
-                </p>
+                        </>
+                      ))
+                    : null}
+                </h3>
               </div>
+              <p className="text-sm font-medium text-blue-600">
+                <span className="text-sm font-bold text-blue-400">
+                  {item!.price} Diamonds <br />
+                </span>
+                <span className="text-sm font-medium text-gray-300">
+                  Sold by {item!.username ?? "*before we logged usernames*"}
+                </span>
+              </p>
             </div>
-          ))}
+          </div>
         </div>
         <br />
         Textures Mapped by{" "}
@@ -640,9 +482,6 @@ const Home: NextPage = () => {
         <br />
         The item icons are owned by Mojang Studios. This project is not
         affiliated with Mojang Studios.
-        <br />
-        Fun Fact: When searching for items, it queries your search for lore,
-        item name, inside of shulker boxes and enchantments.
       </section>
     </>
   ) : (
@@ -650,4 +489,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default ItemID;
