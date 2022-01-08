@@ -1,57 +1,57 @@
-import axios from 'axios'
-import { NextPage } from 'next'
-import * as skinview3d from 'skinview3d'
+import axios from "axios";
+import { NextPage } from "next";
+import * as skinview3d from "skinview3d";
 
 type mcmmoData = {
-  repair: number
-  fishing: number
-  axes: number
-  swords: number
-  powerLevel: number
-  alchemy: number
-  Herbalism: number
-  mining: number
-  error: boolean
-  acrobatics: number
-  woodcutting: number
-  excavation: number
-  unarmed: number
-  archery: number
-  taming: number
-}
+  repair: number;
+  fishing: number;
+  axes: number;
+  swords: number;
+  powerLevel: number;
+  alchemy: number;
+  Herbalism: number;
+  mining: number;
+  error: boolean;
+  acrobatics: number;
+  woodcutting: number;
+  excavation: number;
+  unarmed: number;
+  archery: number;
+  taming: number;
+};
 
 interface Props {
-  username: string
-  mcmmoData: mcmmoData
-  uuid: string
+  username: string;
+  mcmmoData: mcmmoData;
+  uuid: string;
 }
 
 const skillNameMap = {
-  repair: 'Repair',
-  fishing: 'Fishing',
-  axes: 'Axes',
-  swords: 'Swords',
-  powerLevel: 'Power Level',
-  alchemy: 'Alchemy',
-  Herbalism: 'Herbalism',
-  mining: 'Mining',
-  acrobatics: 'Acrobatics',
-  woodcutting: 'Woodcutting',
-  excavation: 'Excavation',
-  unarmed: 'Unarmed',
-  archery: 'Archery',
-  taming: 'Taming'
-}
+  repair: "Repair",
+  fishing: "Fishing",
+  axes: "Axes",
+  swords: "Swords",
+  powerLevel: "Power Level",
+  alchemy: "Alchemy",
+  Herbalism: "Herbalism",
+  mining: "Mining",
+  acrobatics: "Acrobatics",
+  woodcutting: "Woodcutting",
+  excavation: "Excavation",
+  unarmed: "Unarmed",
+  archery: "Archery",
+  taming: "Taming"
+};
 
 export async function getServerSideProps(context: {
-  query: { username: string }
+  query: { username: string };
 }) {
   const uuid = await axios
     .get(
       `https://tristansmp.com/api/usernameLookup?username=${context.query.username}`
     )
     .then((res) => res.data.uuid)
-    .catch(() => null)
+    .catch(() => null);
 
   return {
     props: {
@@ -62,20 +62,20 @@ export async function getServerSideProps(context: {
         .catch(() => ({ error: true })),
       uuid: uuid
     }
-  }
+  };
 }
 const User: NextPage = (props) => {
-  const defp = props as Props
-  const username = defp.username
-  const mcmmoData: mcmmoData = defp.mcmmoData
-  const uuid = defp.uuid
+  const defp = props as Props;
+  const username = defp.username;
+  const mcmmoData: mcmmoData = defp.mcmmoData;
+  const uuid = defp.uuid;
 
   while (!uuid) {
     return (
       <div className="flex flex-col items-center justify-center h-screen text-white text-4xl drop-shadow-2xl">
         Hey it seems like this username doesn&apos;t exist.
       </div>
-    )
+    );
   }
 
   while (mcmmoData.error) {
@@ -83,7 +83,7 @@ const User: NextPage = (props) => {
       <div className="flex flex-col items-center justify-center h-screen text-white text-4xl drop-shadow-2xl">
         Hey it seems like this username doesn&apos;t exist.
       </div>
-    )
+    );
   }
   return (
     <>
@@ -110,20 +110,25 @@ const User: NextPage = (props) => {
               id="skinviewer"
               className="w-full h-full"
               ref={(canvas) => {
+                if (!canvas) return;
+                if (!canvas?.width) return;
+                if (!canvas?.height) return;
                 let skinViewer = new skinview3d.SkinViewer({
                   canvas: canvas!,
                   width: 300,
                   height: 400,
                   skin: `https://crafatar.com/skins/${uuid}`
-                })
+                });
                 // Control with mouse
-                let control = skinview3d.createOrbitControls(skinViewer)
-                control.enableRotate = true
-                control.enableZoom = false
-                control.enablePan = false
-                let run = skinViewer.animations.add(skinview3d.RunningAnimation)
+                let control = skinview3d.createOrbitControls(skinViewer);
+                control.enableRotate = true;
+                control.enableZoom = false;
+                control.enablePan = false;
+                let run = skinViewer.animations.add(
+                  skinview3d.RunningAnimation
+                );
                 // Set the speed of the running animation
-                run.speed = 0.5
+                run.speed = 0.5;
               }}
             />
             {username}
@@ -136,8 +141,8 @@ const User: NextPage = (props) => {
               {
                 // for every skill in the mcmmo data object we create a div with the skill name and the skill level
                 Object.keys(mcmmoData!).map((skill) => {
-                  if (skill == 'error') {
-                    return
+                  if (skill == "error") {
+                    return;
                   }
                   return (
                     <>
@@ -148,16 +153,16 @@ const User: NextPage = (props) => {
                         </div>
                         <div
                           className="w-full lg:order-2 relative lg:flex-grow lg:flex-1"
-                          style={{ fontSize: '90%' }}
+                          style={{ fontSize: "90%" }}
                         >
                           <p className="text-gray-200 font-extrabold text-xl font-mono">
                             {/* @ts-ignore */}
-                            {mcmmoData![skill] > 0 ? mcmmoData![skill] : '-'}
+                            {mcmmoData![skill] > 0 ? mcmmoData![skill] : "-"}
                           </p>
                         </div>
                       </div>
                     </>
-                  )
+                  );
                 })
               }
             </div>
@@ -165,7 +170,7 @@ const User: NextPage = (props) => {
         </div>
       </section>
     </>
-  )
-}
+  );
+};
 
-export default User
+export default User;
