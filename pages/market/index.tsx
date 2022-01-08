@@ -483,12 +483,13 @@ const Home: NextPage = () => {
           Update:
           <ul>
             <li>
-              Shulker boxes that haven't been coloured will now show the insides
-              of it. (this is so people can still make mystery boxes)
+              Shulker boxes that haven't been coloured & are sold after 7/01/22
+              will now show the insides of it. (this is so people can still make
+              mystery boxes)
             </li>
             <li>
-              Enchantment Books sold on the market after today will now show the
-              enchants.
+              Enchantment Books sold on the market after 7/01/22 will now show
+              the enchants.
             </li>
           </ul>
         </span>

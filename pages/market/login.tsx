@@ -33,7 +33,7 @@ const Login: NextPage = () => {
   return (
     <>
       <div className="flex flex-col items-center justify-center h-screen bg-[url('/images/signin.png')] bg-cover">
-        <div className="p-3 bg-zinc-800 my-44 flex flex-col rounded-xl drop-shadow-2xl">
+        <div className="p-5 bg-zinc-800 my-44 flex flex-col rounded-xl drop-shadow-2xl">
           <Transition.Root show={open} as={Fragment}>
             <Dialog
               as="div"
@@ -124,14 +124,14 @@ const Login: NextPage = () => {
               </div>
             </Dialog>
           </Transition.Root>
-          <label className="p-2 font-bold text-white text-3xl text-left">
-            Sign-In via your TSMP Account
-          </label>
+
+          <h1 className="text-3xl font-medium">Login</h1>
+
           <input
             type="email"
             placeholder="email"
             id="email"
-            className="p-2 mx-2 mt-6 bg-blue-200 text-black rounded-md placeholder-gray-600"
+            className="p-2 w-96 mx-2 mt-6 bg-blue-200 text-black rounded-md placeholder-gray-600"
             onChange={(e) => setEmail(e.target.value)}
             value={email}
           />
@@ -139,7 +139,7 @@ const Login: NextPage = () => {
             type="password"
             placeholder="password"
             id="password"
-            className="p-2 mx-2 mt-6 bg-blue-200 text-black rounded-md placeholder-gray-600"
+            className="p-2 w-96 mx-2 mt-6 bg-blue-200 text-black rounded-md placeholder-gray-600"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
@@ -149,18 +149,19 @@ const Login: NextPage = () => {
           >
             Log in
           </button>
+          <br />
+          <a
+            className="text-white text-center"
+            onClick={() => {
+              setOpen(true);
+            }}
+          >
+            <span className="text-sm text-shadow text-center hover:cursor-pointer hover:underline">
+              Don't have an account?{" "}
+              <span className="text-blue-500">Sign up</span>
+            </span>
+          </a>
         </div>
-        <a
-          className="text-white text-center mt-6"
-          onClick={() => {
-            setOpen(true);
-          }}
-        >
-          <span className="text-sm hover:cursor-pointer hover:underline">
-            Don't have an account?{" "}
-            <span className="text-blue-500">Sign up</span>
-          </span>
-        </a>
       </div>
     </>
   );

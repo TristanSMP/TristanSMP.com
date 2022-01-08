@@ -68,7 +68,7 @@ function MyApp({ Component, pageProps }: AppProps) {
               </Link>
             </li>
             <li className="growing-underline mx-3">
-              <Link href="/markets">
+              <Link href="/market">
                 <a>Market</a>
               </Link>
             </li>
@@ -99,9 +99,9 @@ function MyApp({ Component, pageProps }: AppProps) {
                 onClick={() => {
                   if (user) {
                     fauth.signOut();
-                    window.location.href = `/markets/login`;
+                    window.location.href = `/market/login`;
                   } else {
-                    window.location.href = `/markets/login`;
+                    window.location.href = `/market/login`;
                   }
                 }}
               >
