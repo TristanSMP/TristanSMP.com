@@ -7,8 +7,11 @@ import {
   collection,
   doc,
   getDocs,
+  limit,
   onSnapshot,
-  query
+  orderBy,
+  query,
+  startAfter
 } from "firebase/firestore";
 // @ts-expect-error
 import McText from "mctext-react";
@@ -19,6 +22,7 @@ import { Fragment, useEffect, useRef, useState } from "react";
 import { Item } from "../../components/Item";
 import { MarketsPage } from "../../components/MarketsPage";
 import { fauth, firebaseAuth, firestore } from "../../utils";
+const fstore = firestore.getFirestore();
 
 type MarketItem = {
   base64: string;
@@ -50,6 +54,9 @@ const Home: NextPage = () => {
   );
   const [diamonds, setDiamonds] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [lastItem, setLastItem] = useState<MarketItem>();
+
+  const [qa, setQa] = useState(50);
 
   const [search, setSearch] = useState("");
   const [sortOptions, setSortOptions] = useState([
@@ -72,6 +79,20 @@ const Home: NextPage = () => {
   }
 
   const randomInt = useRef(Math.random());
+
+  // if we reach the bottom of the page increase query
+  function onScroll() {
+    console.log("scrolled");
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+      console.log("scrolled to bottom");
+
+      setQa(displayedItems.length + 50);
+    }
+  }
+
+  useEffect(() => {
+    window.addEventListener("scroll", onScroll, { passive: true });
+  }, []);
 
   useEffect(() => {
     if (items != null) {
@@ -113,9 +134,13 @@ const Home: NextPage = () => {
   useEffect(() => {
     fauth.onAuthStateChanged(async (user) => {
       if (user) {
-        const fstore = firestore.getFirestore();
         setUser(user);
-        const q = query(collection(fstore, "market"));
+        const q = query(
+          collection(fstore, "market"),
+          limit(qa),
+          orderBy("price", "asc"),
+          startAfter(lastItem ? lastItem.id : null)
+        );
 
         onSnapshot(doc(fstore, "users", user.uid), (snapshot) => {
           setWithdrawButtonJSX(<>Withdraw Diamonds</>);
@@ -145,6 +170,10 @@ const Home: NextPage = () => {
                 )
               );
 
+              if (items) {
+                setLastItem(items[items.length - 1]);
+              }
+
               setLoading(false);
             } else if (change.type === "removed") {
               setItems((items) =>
@@ -157,7 +186,7 @@ const Home: NextPage = () => {
         setLoading(false);
       }
     });
-  }, []);
+  }, [qa]);
 
   while (loading) {
     return (
@@ -557,12 +586,7 @@ const Home: NextPage = () => {
               key={item.base64 + (Math.random() + 1).toString(36).substring(7)}
               className="group relative"
             >
-              <div className="w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none">
-                <Item
-                  className="w-2/4 h-2/4 object-center object-cover lg:w-full lg:h-full bg-purple-300"
-                  id={`minecraft:${item.base64.split(" 😎 ")[1].toLowerCase()}`}
-                />
-              </div>
+              <div className="w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none"></div>
               <div className="mt-4 flex justify-between">
                 <div>
                   <h3 className="text-sm text-white font-semibold">
