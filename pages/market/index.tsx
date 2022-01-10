@@ -86,21 +86,32 @@ const Home: NextPage = () => {
             )
           : null;
 
-        let q = query(
-          collection(fstore, "market"),
-          limit(50),
+        let q = query(collection(fstore, "market"), limit(50));
 
-          // @ts-ignore
-          startAfter(afterDocRef ?? null)
-        );
+        if (afterDocRef) {
+          q = query(
+            collection(fstore, "market"),
+            limit(50),
+            startAfter(afterDocRef)
+          );
+        }
 
         if (search != "") {
           q = query(
             collection(fstore, "market"),
             limit(50),
             orderBy("customName", "asc"),
-            // @ts-ignore
-            startAfter(afterDocRef ?? null),
+            where("customName", ">=", search),
+            where("customName", "<=", search + "\uf8ff")
+          );
+        }
+
+        if (search != "" && afterDocRef) {
+          q = query(
+            collection(fstore, "market"),
+            limit(50),
+            orderBy("customName", "asc"),
+            startAfter(afterDocRef),
             where("customName", ">=", search),
             where("customName", "<=", search + "\uf8ff")
           );
