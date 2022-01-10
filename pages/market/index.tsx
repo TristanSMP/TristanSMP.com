@@ -1,6 +1,11 @@
 import { User } from "@firebase/auth";
 import { Dialog, Menu, Transition } from "@headlessui/react";
-import { BadgeCheckIcon, ChevronDownIcon } from "@heroicons/react/outline";
+import {
+  BadgeCheckIcon,
+  ChevronDownIcon,
+  InformationCircleIcon
+} from "@heroicons/react/outline";
+import { Tooltip } from "@mui/material";
 import axios, { AxiosError } from "axios";
 import { EventEmitter } from "fbemitter";
 import {
@@ -506,11 +511,13 @@ const Home: NextPage = () => {
           </ul>
         </span>
         <div className="relative z-10 flex items-baseline justify-between pt-24 pb-6 border-b border-gray-200">
-          <h1 className="text-4xl font-extrabold tracking-tight text-white">
-            {`${currentSort ?? "Unknown Sort"} - ${
-              items?.length ?? 0
-            } queried items`}
-          </h1>
+          <Tooltip title="Queried Items only! If you have no search set then we will pick 50 random items and display them to you with your current sort">
+            <h1 className="text-4xl font-extrabold tracking-tight text-white">
+              {`${currentSort ?? "Unknown Sort"} - ${items?.length ?? 0} items`}
+              <InformationCircleIcon className="inline w-5 h-5 ml-4" />
+            </h1>
+          </Tooltip>
+
           <div className="flex items-center">
             <Menu as="div" className="relative inline-block text-left">
               <div>
