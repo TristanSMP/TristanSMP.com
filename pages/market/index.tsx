@@ -6,19 +6,26 @@ import { EventEmitter } from "fbemitter";
 import {
   collection,
   doc,
+  getDoc,
   getDocs,
+  limit,
   onSnapshot,
-  query
+  orderBy,
+  query,
+  startAfter,
+  where
 } from "firebase/firestore";
 // @ts-expect-error
 import McText from "mctext-react";
 import type { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { Fragment, useEffect, useRef, useState } from "react";
 import { Item } from "../../components/Item";
 import { MarketsPage } from "../../components/MarketsPage";
 import { fauth, firebaseAuth, firestore } from "../../utils";
+const fstore = firestore.getFirestore();
 
 type MarketItem = {
   base64: string;
@@ -38,9 +45,6 @@ export const signOutEvent = new EventEmitter();
 const Home: NextPage = () => {
   const [user, setUser] = useState<User | null>(null);
   const [items, setItems] = useState<MarketItem[]>();
-
-  const [displayedItems, setDisplayedItems] = useState<MarketItem[]>([]);
-
   const [open, setOpen] = useState(false);
   const cancelButtonRef = useRef(null);
   const [item, setItem] = useState<MarketItem>();
@@ -53,69 +57,54 @@ const Home: NextPage = () => {
 
   const [search, setSearch] = useState("");
   const [sortOptions, setSortOptions] = useState([
-    { name: "Price: Low to High", current: false },
-    { name: "Price: High to Low", current: false },
-    { name: "Random", current: true }
+    { name: "Price: Low to High" },
+    { name: "Price: High to Low" }
   ]);
+
+  const [currentSort, setCurrentSort] = useState("Price: Low to High");
+
+  const [searchLoading, setSearchLoading] = useState(false);
 
   function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(" ");
   }
 
-  function setSortMode(mode: string) {
-    setSortOptions(
-      sortOptions.map((option) => {
-        option.current = option.name === mode;
-        return option;
-      })
-    );
-  }
-
-  const randomInt = useRef(Math.random());
+  const router = useRouter();
 
   useEffect(() => {
-    if (items != null) {
-      if (search != "") {
-        const sortedItems = items.filter(
-          (item) =>
-            item.customName.toLowerCase().includes(search.toLowerCase()) ||
-            (item.lore != null &&
-              item.lore.some((lore) =>
-                lore.toLowerCase().includes(search.toLowerCase())
-              )) ||
-            (item.enchants != [] &&
-              item.enchants.some((enchant) =>
-                enchant.toLowerCase().includes(search.toLowerCase())
-              )) ||
-            (item.insideshulker != null &&
-              item.insideshulker.includes(search.toLowerCase()))
-        );
-        if (sortOptions[0].current) {
-          setDisplayedItems(sortedItems.sort((a, b) => a.price - b.price));
-        } else if (sortOptions[1].current) {
-          setDisplayedItems(sortedItems.sort((a, b) => b.price - a.price));
-        } else if (sortOptions[2].current) {
-          setDisplayedItems(sortedItems.sort(() => 0.5 - randomInt.current));
-        }
-      } else {
-        const sortedItems = items;
-        if (sortOptions[0].current) {
-          setDisplayedItems(sortedItems.sort((a, b) => a.price - b.price));
-        } else if (sortOptions[1].current) {
-          setDisplayedItems(sortedItems.sort((a, b) => b.price - a.price));
-        } else if (sortOptions[2].current) {
-          setDisplayedItems(sortedItems.sort(() => 0.5 - randomInt.current));
-        }
-      }
-    }
-  }, [search, items, sortOptions]);
+    if (!router.isReady) return;
 
-  useEffect(() => {
     fauth.onAuthStateChanged(async (user) => {
       if (user) {
-        const fstore = firestore.getFirestore();
         setUser(user);
-        const q = query(collection(fstore, "market"));
+        setSearchLoading(true);
+
+        const afterDocRef = router.query.startAfter
+          ? await getDoc(
+              // @ts-ignore
+              doc(fstore, "market", router.query.startAfter)
+            )
+          : null;
+
+        let q = query(
+          collection(fstore, "market"),
+          limit(50),
+
+          // @ts-ignore
+          startAfter(afterDocRef ?? null)
+        );
+
+        if (search != "") {
+          q = query(
+            collection(fstore, "market"),
+            limit(50),
+            orderBy("customName", "asc"),
+            // @ts-ignore
+            startAfter(afterDocRef ?? null),
+            where("customName", ">=", search),
+            where("customName", "<=", search + "\uf8ff")
+          );
+        }
 
         onSnapshot(doc(fstore, "users", user.uid), (snapshot) => {
           setWithdrawButtonJSX(<>Withdraw Diamonds</>);
@@ -127,25 +116,34 @@ const Home: NextPage = () => {
             if (change.type === "added") {
               setItems(
                 await getDocs(q).then((docs) =>
-                  docs.docs.map((doc) => {
-                    const data = doc.data();
-                    return {
-                      base64: data.base64,
-                      price: data.price,
-                      seller: data.seller,
-                      id: doc.id,
-                      lore: data.lore,
-                      enchants: data.enchants,
-                      customName: data.customName,
-                      amount: data.amount,
-                      username: data.username,
-                      insideshulker: data.insideshulker
-                    };
-                  })
+                  docs.docs
+                    .map((doc) => {
+                      const data = doc.data();
+                      return {
+                        base64: data.base64,
+                        price: data.price,
+                        seller: data.seller,
+                        id: doc.id,
+                        lore: data.lore,
+                        enchants: data.enchants,
+                        customName: data.customName,
+                        amount: data.amount,
+                        username: data.username,
+                        insideshulker: data.insideshulker
+                      };
+                    })
+                    .sort((a, b) => {
+                      if (currentSort === "Price: Low to High") {
+                        return a.price - b.price;
+                      } else {
+                        return b.price - a.price;
+                      }
+                    })
                 )
               );
 
               setLoading(false);
+              setSearchLoading(false);
             } else if (change.type === "removed") {
               setItems((items) =>
                 items!.filter((item) => item.id !== change.doc.id)
@@ -157,7 +155,7 @@ const Home: NextPage = () => {
         setLoading(false);
       }
     });
-  }, []);
+  }, [router.isReady, search, currentSort]);
 
   while (loading) {
     return (
@@ -498,10 +496,9 @@ const Home: NextPage = () => {
         </span>
         <div className="relative z-10 flex items-baseline justify-between pt-24 pb-6 border-b border-gray-200">
           <h1 className="text-4xl font-extrabold tracking-tight text-white">
-            {`${
-              sortOptions.find((option) => option.current === true)?.name ??
-              "Unknown Sort"
-            } - ${displayedItems?.length ?? 0} items`}
+            {`${currentSort ?? "Unknown Sort"} - ${
+              items?.length ?? 0
+            } queried items`}
           </h1>
           <div className="flex items-center">
             <Menu as="div" className="relative inline-block text-left">
@@ -530,10 +527,10 @@ const Home: NextPage = () => {
                         {({ active }) => (
                           <a
                             onClick={() => {
-                              setSortMode(option.name);
+                              setCurrentSort(option.name);
                             }}
                             className={classNames(
-                              option.current
+                              currentSort
                                 ? "font-medium text-gray-900"
                                 : "text-gray-500",
                               active ? "bg-gray-100" : "",
@@ -552,39 +549,44 @@ const Home: NextPage = () => {
           </div>
         </div>
         <div className="mt-6 grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-          {displayedItems!.map((item) => (
-            <div
-              key={item.base64 + (Math.random() + 1).toString(36).substring(7)}
-              className="group relative"
-            >
-              <div className="w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none">
-                <Item
-                  className="w-2/4 h-2/4 object-center object-cover lg:w-full lg:h-full bg-purple-300"
-                  id={`minecraft:${item.base64.split(" 😎 ")[1].toLowerCase()}`}
-                />
-              </div>
-              <div className="mt-4 flex justify-between">
-                <div>
-                  <h3 className="text-sm text-white font-semibold">
-                    <a
-                      onClick={() => {
-                        setItem(item);
-                        setMainButtonJSX(<>Buy!</>);
-                        setOpen(true);
-                      }}
-                    >
-                      <span aria-hidden="true" className="absolute inset-0" />
-                      {item.customName.startsWith("TextComponentImpl")
-                        ? `${
-                            item.amount
-                              ? `${item.amount} x ${
-                                  item.customName.split('"')[1]
-                                }`
-                              : `Unknown Amount x ${
-                                  item.customName.split('"')[1]
-                                }`
-                          }`
-                        : `
+          {!searchLoading ? (
+            items!.map((item) => (
+              <div
+                key={
+                  item.base64 + (Math.random() + 1).toString(36).substring(7)
+                }
+                className="group relative"
+              >
+                <div className="w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-80 lg:aspect-none">
+                  <Item
+                    className="w-2/4 h-2/4 object-center object-cover lg:w-full lg:h-full bg-purple-300"
+                    id={`minecraft:${item.base64
+                      .split(" 😎 ")[1]
+                      .toLowerCase()}`}
+                  />
+                </div>
+                <div className="mt-4 flex justify-between">
+                  <div>
+                    <h3 className="text-sm text-white font-semibold">
+                      <a
+                        onClick={() => {
+                          setItem(item);
+                          setMainButtonJSX(<>Buy!</>);
+                          setOpen(true);
+                        }}
+                      >
+                        <span aria-hidden="true" className="absolute inset-0" />
+                        {item.customName.startsWith("TextComponentImpl")
+                          ? `${
+                              item.amount
+                                ? `${item.amount} x ${
+                                    item.customName.split('"')[1]
+                                  }`
+                                : `Unknown Amount x ${
+                                    item.customName.split('"')[1]
+                                  }`
+                            }`
+                          : `
                           ${
                             item.amount
                               ? `${item.amount} x ${item.base64
@@ -596,42 +598,58 @@ const Home: NextPage = () => {
                           }
                           
                           `}
-                    </a>
-                    <br />
-                    {item.lore
-                      ? item.lore.map((lore) => (
-                          <span key={lore} className="text-sm text-gray-600">
-                            <McText>{lore}</McText>
-                          </span>
-                        ))
-                      : null}
-                    {item.enchants
-                      ? item.enchants.map((enchant) => (
-                          <>
-                            <br />
-                            <span
-                              key={enchant}
-                              className="text-sm text-purple-600"
-                            >
-                              {enchant}
+                      </a>
+                      <br />
+                      {item.lore
+                        ? item.lore.map((lore) => (
+                            <span key={lore} className="text-sm text-gray-600">
+                              <McText>{lore}</McText>
                             </span>
-                          </>
-                        ))
-                      : null}
-                  </h3>
+                          ))
+                        : null}
+                      {item.enchants
+                        ? item.enchants.map((enchant) => (
+                            <>
+                              <br />
+                              <span
+                                key={enchant}
+                                className="text-sm text-purple-600"
+                              >
+                                {enchant}
+                              </span>
+                            </>
+                          ))
+                        : null}
+                    </h3>
+                  </div>
+                  <p className="text-sm font-medium text-blue-600">
+                    <span className="text-sm font-bold text-blue-400">
+                      {item.price} Diamonds <br />
+                    </span>
+                    <span className="text-sm font-medium text-gray-300">
+                      Sold by {item.username ?? "*before we logged usernames*"}
+                    </span>
+                  </p>
                 </div>
-                <p className="text-sm font-medium text-blue-600">
-                  <span className="text-sm font-bold text-blue-400">
-                    {item.price} Diamonds <br />
-                  </span>
-                  <span className="text-sm font-medium text-gray-300">
-                    Sold by {item.username ?? "*before we logged usernames*"}
-                  </span>
-                </p>
               </div>
-            </div>
-          ))}
+            ))
+          ) : (
+            <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-blurple drop-shadow-2xl" />
+          )}
         </div>
+        <br />
+        <button
+          type="button"
+          onClick={() => {
+            const lastItem = items?.[items.length - 1];
+            if (lastItem) {
+              window.location.href = `/market?startAfter=${lastItem.id}`;
+            }
+          }}
+          className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
+        >
+          Next Page
+        </button>
         <br />
         Textures Mapped by{" "}
         <Link href="https://www.npmjs.com/package/minecraft-textures">
