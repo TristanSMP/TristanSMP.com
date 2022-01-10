@@ -18,9 +18,9 @@ import Head from "next/head";
 import Link from "next/link";
 import Router from "next/router";
 import { Fragment, useEffect, useRef, useState } from "react";
-import { Item } from "../../components/Item";
-import { MarketsPage } from "../../components/MarketsPage";
-import { fauth, firebaseAuth, firestore } from "../../utils";
+import { Item } from "../../../components/Item";
+import { MarketsPage } from "../../../components/MarketsPage";
+import { fauth, firebaseAuth, firestore } from "../../../utils";
 
 type MarketItem = {
   base64: string;
