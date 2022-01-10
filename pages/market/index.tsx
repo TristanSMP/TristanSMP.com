@@ -91,12 +91,12 @@ const Home: NextPage = () => {
             )
           : null;
 
-        let q = query(collection(fstore, "market"), limit(50));
+        let q = query(collection(fstore, "market"), limit(33));
 
         if (afterDocRef) {
           q = query(
             collection(fstore, "market"),
-            limit(50),
+            limit(33),
             startAfter(afterDocRef)
           );
         }
@@ -104,7 +104,7 @@ const Home: NextPage = () => {
         if (search != "") {
           q = query(
             collection(fstore, "market"),
-            limit(50),
+            limit(45),
             orderBy("customName", "asc"),
             where("customName", ">=", search),
             where("customName", "<=", search + "\uf8ff")
@@ -114,7 +114,7 @@ const Home: NextPage = () => {
         if (search != "" && afterDocRef) {
           q = query(
             collection(fstore, "market"),
-            limit(50),
+            limit(35),
             orderBy("customName", "asc"),
             startAfter(afterDocRef),
             where("customName", ">=", search),
@@ -676,9 +676,6 @@ const Home: NextPage = () => {
         <br />
         The item icons are owned by Mojang Studios. This project is not
         affiliated with Mojang Studios.
-        <br />
-        Fun Fact: When searching for items, it queries your search for lore,
-        item name, inside of shulker boxes and enchantments.
       </section>
     </>
   ) : (
