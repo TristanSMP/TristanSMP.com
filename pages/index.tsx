@@ -71,7 +71,7 @@ const Home: NextPage = () => {
               <div className="relative">
                 <Link href="/photos">
                   <Image
-                    src="https://cdn.discordapp.com/attachments/910411610592538685/926200820456906843/2021-12-30_16.50.01.png"
+                    src="/images/signin.png"
                     alt="TSMP Spawn"
                     className="absolute -top-16 -left-10 rounded-lg cursor-pointer"
                     width={1920}
