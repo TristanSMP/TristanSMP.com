@@ -496,22 +496,8 @@ const Home: NextPage = () => {
           value={search}
         />
         <br />
-        <span className="text-sm font-bold text-white">
-          Update:
-          <ul>
-            <li>
-              Shulker boxes that haven't been coloured & are sold after 7/01/22
-              will now show the insides of it. (this is so people can still make
-              mystery boxes)
-            </li>
-            <li>
-              Enchantment Books sold on the market after 7/01/22 will now show
-              the enchants.
-            </li>
-          </ul>
-        </span>
         <div className="relative z-10 flex items-baseline justify-between pt-24 pb-6 border-b border-gray-200">
-          <Tooltip title="Queried Items only! If you have no search set then we will pick 50 random items and display them to you with your current sort">
+          <Tooltip title="Queried Items only! If you have no search set then we will pick 30-33 random items and display them to you with your current sort">
             <h1 className="text-4xl font-extrabold tracking-tight text-white">
               {`${currentSort ?? "Unknown Sort"} - ${items?.length ?? 0} items`}
               <InformationCircleIcon className="inline w-5 h-5 ml-4" />
