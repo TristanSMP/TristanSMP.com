@@ -607,12 +607,14 @@ const Home: NextPage = () => {
                           : `
                           ${
                             item.amount
-                              ? `${item.amount} x ${item.base64
-                                  .split(" 😎 ")[1]
-                                  .replaceAll("_", " ")}`
-                              : `Unknown Amount x ${item.base64
-                                  .split(" 😎 ")[1]
-                                  .replaceAll("_", " ")}`
+                              ? `${item.amount} x ${item.customName.replaceAll(
+                                  "_",
+                                  " "
+                                )}`
+                              : `Unknown Amount x ${item.base64.replaceAll(
+                                  "_",
+                                  " "
+                                )}`
                           }
                           
                           `}
