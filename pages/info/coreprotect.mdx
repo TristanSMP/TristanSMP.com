@@ -1,13 +1,19 @@
 # CoreProtect Basics
-# Lookup
+
+## Lookup
+
 Perform a lookup. Nearly all of the parameters are optional.
-Command 	Parameters
-/co lookup 	u:<user> t:<time> r:<radius> a:<action> i:<include> e:<exclude>
-/co l 	/co lookup <params>
-  **Parameters**
+Command Parameters
+
+```
+/co lookup u:<user> t:<time> r:<radius> a:<action> i:<include> e:<exclude>
+/co l /co lookup <params>
+```
+
+## Parameters
 
 | Parameter | Description                                     |
-|-----------|-------------------------------------------------|
+| --------- | ----------------------------------------------- |
 | `u:`      | Specify the user(s) to lookup.                  |
 | `t:`      | Specify the amount of time to lookup.           |
 | `r:`      | Specify a radius area to limit the lookup to.   |
@@ -18,20 +24,21 @@ Command 	Parameters
 
 ## Pagination
 
-If multiple pages are returned, use the command /co lookup <page> to switch pages.
-To change the number of lines displayed on a page, use /co lookup <page>:<lines>.
+If multiple pages are returned, use the command `/co lookup <page>` to switch pages.
+To change the number of lines displayed on a page, use `/co lookup <page>:<lines>`.
 
 For example, `/co l 1:10` will return 10 lines of data, starting at the first page.
 
-	**/co rollback**
+    **/co rollback**
 
 Perform a rollback. Uses the same parameters as /co lookup.
 Rollbacks can be used to revert player actions.
-Command 	Parameters
-/co rollback 	u:<user> t:<time> r:<radius> a:<action> i:<include> e:<exclude>
-/co rb 	/co rollback <params>
+Command Parameters
 
-
+```
+/co rollback u:<user> t:<time> r:<radius> a:<action> i:<include> e:<exclude>
+/co rb /co rollback <params>
+```
 
 `u:<user>`
 
@@ -65,56 +72,33 @@ Restrict the command to a specific action
     **Example:** `a:+block` *(only include placed blocks)*
 
 
-	**Actions**
+    **Actions**
 
-+----------------+--------------------------------------------------------------+
 | Action         | Description                                                  |
-+----------------+--------------------------------------------------------------+
+| -------------- | ------------------------------------------------------------ |
 | `a:block`      | blocks placed/broken                                         |
-+----------------+--------------------------------------------------------------+
 | `a:+block`     | blocks placed                                                |
-+----------------+--------------------------------------------------------------+
 | `a:-block`     | blocks broken                                                |
-+----------------+--------------------------------------------------------------+
 | `a:chat`       | messages sent in chat                                        |
-+----------------+--------------------------------------------------------------+
 | `a:click`      | player interactions                                          |
-+----------------+--------------------------------------------------------------+
 | `a:command`    | commands used                                                |
-+----------------+--------------------------------------------------------------+
 | `a:container`  | items taken from or put in chests                            |
-+----------------+--------------------------------------------------------------+
 | `a:+container` | items put in chests                                          |
-+----------------+--------------------------------------------------------------+
 | `a:-container` | items taken from chests                                      |
-+----------------+--------------------------------------------------------------+
-| `a:inventory`  | items dropped, picked up, deposited, or withdrawn by         |
-|                |  players                                                     |
-+----------------+--------------------------------------------------------------+
+| `a:inventory`  | items dropped, picked up, deposited, or withdrawn by players |
 | `a:+inventory` | items picked up or withdrawn by players                      |
-+----------------+--------------------------------------------------------------+
 | `a:-inventory` | items dropped or deposited by players                        |
-+----------------+--------------------------------------------------------------+
 | `a:item`       | merges a:container and a:inventory                           |
-+----------------+--------------------------------------------------------------+
 | `a:+item`      | merges a:+container and a:+inventory                         |
-+----------------+--------------------------------------------------------------+
 | `a:-item`      | merges a:-container and a:-inventory                         |
-+----------------+--------------------------------------------------------------+
 | `a:kill`       | mobs/animals killed                                          |
-+----------------+--------------------------------------------------------------+
 | `a:session`    | player logins/logouts                                        |
-+----------------+--------------------------------------------------------------+
 | `a:+session`   | player logins                                                |
-+----------------+--------------------------------------------------------------+
 | `a:-session`   | player logouts                                               |
-+----------------+--------------------------------------------------------------+
 | `a:sign`       | messages written on signs                                    |
-+----------------+--------------------------------------------------------------+
 | `a:username`   | username changes                                             |
-+----------------+--------------------------------------------------------------+
 
-i:<include>
+`i:<include>`
 
 Can be used to specify a block/item/entity.
 
@@ -136,7 +120,7 @@ Add a hashtag to the end of your command to perform additional actions.
 
     Example: #preview (perform a rollback preview)
 
-  **Hashtags**
+**Hashtags**
 
 | Hashtag  | Effect                                                   |
 | -------- | -------------------------------------------------------- |
@@ -188,17 +172,18 @@ not applied to lookups, meaning all lookup commands do a global search by defaul
     `/co lookup u:Notch a:username`
     *(lookup previous usernames used by Notch)*
 
-#⚠️IMPORTANT⚠️
-When doing a rollback, generally using the #preview tag first is a good idea. This performs a rollback only you can 
+## ⚠️IMPORTANT⚠️
+
+When doing a rollback, generally using the #preview tag first is a good idea. This performs a rollback only you can
 see, so if you accidentally miss a parameter you can correct it before doing the actual rollback.
 
-***NEVER*** do a rollback without adding radius *or* time to it, and avoid doing rollbacks in places with high mob 
+**_NEVER_** do a rollback without adding radius _or_ time to it, and avoid doing rollbacks in places with high mob
 density, as there is no cap to how many mobs can be put in one area, and nothing will stop coreprotect from putting
-an absurd amount of mobs in an area. *If* you accidentally perform a rollback that was unintentional, put it in staff 
-chat and ping either Tristan or fadingly. Rollbacks can be undone with the /co restore command, however only Tristan 
+an absurd amount of mobs in an area. _If_ you accidentally perform a rollback that was unintentional, put it in staff
+chat and ping either Tristan or fadingly. Rollbacks can be undone with the /co restore command, however only Tristan
 is allowed to perform this command. All coreprotect commands are logged in a channel, so undoing an accidental rollback is easy.
-  
-Coreprotect is a *block logging plugin*. This means it only logs changes to physical blocks in the world, and non player entities.
-It can only perform rollbacks on these things it logs. As a result, any changes to players or dropped items on the ground *cannot 
-be rolled back*. If somebody dies to a mob, this cannot be undone using coreprotect. If items dropped on the ground are destroyed
-*in any way* **this cannot be undone**.
+
+Coreprotect is a _block logging plugin_. This means it only logs changes to physical blocks in the world, and non player entities.
+It can only perform rollbacks on these things it logs. As a result, any changes to players or dropped items on the ground _cannot
+be rolled back_. If somebody dies to a mob, this cannot be undone using coreprotect. If items dropped on the ground are destroyed
+_in any way_ **this cannot be undone**.
