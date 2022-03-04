@@ -1,4 +1,4 @@
-	**/co lookup**
+# CoreProtect Basics
 
 Perform a lookup. Nearly all of the parameters are optional.
 Command 	Parameters
