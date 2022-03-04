@@ -145,7 +145,7 @@ Add a hashtag to the end of your command to perform additional actions.
 | #verbose | Display additional information during a rollback/restore |
 | #silent  | Display minimal information during a rollback/restore    |
 
-	**Example Commands**
+## Example Commands
 
 ### Example Rollback Commands
 
