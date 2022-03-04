@@ -16,7 +16,7 @@ Command 	Parameters
 | `e:`      | Exclude blocks/entities from the lookup.        |
 | `#`       | Add a hashtag to perform additional actions.    |
 
-  **Pagination**
+## Pagination
 
 If multiple pages are returned, use the command /co lookup <page> to switch pages.
 To change the number of lines displayed on a page, use /co lookup <page>:<lines>.
