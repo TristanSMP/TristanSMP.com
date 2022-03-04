@@ -172,7 +172,7 @@ By default, if no radius is specified, a radius of 10 will be applied, restricti
     `/co rollback t:15m r:#worldedit`
     *(rollback everything done in the last 15 minutes in a WorldEdit selection)*
 
-Example Lookup Commands
+### Example Lookup Commands
 
 Lookup commands are generally the same as rollback commands. The primary difference is that a default radius is
 not applied to lookups, meaning all lookup commands do a global search by default.
