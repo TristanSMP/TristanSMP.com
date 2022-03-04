@@ -188,7 +188,7 @@ not applied to lookups, meaning all lookup commands do a global search by defaul
     `/co lookup u:Notch a:username`
     *(lookup previous usernames used by Notch)*
 
-***IMPORTANT***
+#⚠️IMPORTANT⚠️
 When doing a rollback, generally using the #preview tag first is a good idea. This performs a rollback only you can 
 see, so if you accidentally miss a parameter you can correct it before doing the actual rollback.
 
