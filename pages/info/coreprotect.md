@@ -1,5 +1,5 @@
 # CoreProtect Basics
-
+# Lookup
 Perform a lookup. Nearly all of the parameters are optional.
 Command 	Parameters
 /co lookup 	u:<user> t:<time> r:<radius> a:<action> i:<include> e:<exclude>
