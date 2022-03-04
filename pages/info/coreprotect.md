@@ -21,7 +21,7 @@ Command 	Parameters
 If multiple pages are returned, use the command /co lookup <page> to switch pages.
 To change the number of lines displayed on a page, use /co lookup <page>:<lines>.
 
-    For example, /co l 1:10 will return 10 lines of data, starting at the first page.
+For example, `/co l 1:10` will return 10 lines of data, starting at the first page.
 
 	**/co rollback**
 
