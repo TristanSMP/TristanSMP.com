@@ -147,7 +147,7 @@ Add a hashtag to the end of your command to perform additional actions.
 
 	**Example Commands**
 
-  **Example Rollback Commands**
+### Example Rollback Commands
 
 By default, if no radius is specified, a radius of 10 will be applied, restricting the rollback to within 10 blocks of you. Use r:#global to do a global rollback.
 
