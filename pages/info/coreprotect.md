@@ -6,23 +6,15 @@ Command 	Parameters
 /co l 	/co lookup <params>
   **Parameters**
 
-+-----------+-------------------------------------------------+
 | Parameter | Description                                     |
-+-----------+-------------------------------------------------+
+|-----------|-------------------------------------------------|
 | `u:`      | Specify the user(s) to lookup.                  |
-+-----------+-------------------------------------------------+
 | `t:`      | Specify the amount of time to lookup.           |
-+-----------+-------------------------------------------------+
 | `r:`      | Specify a radius area to limit the lookup to.   |
-+-----------+-------------------------------------------------+
 | `a:`      | Restrict the lookup to a certain action.        |
-+-----------+-------------------------------------------------+
 | `i:`      | Include specific blocks/entities in the lookup. |
-+-----------+-------------------------------------------------+
 | `e:`      | Exclude blocks/entities from the lookup.        |
-+-----------+-------------------------------------------------+
 | `#`       | Add a hashtag to perform additional actions.    |
-+-----------+-------------------------------------------------+
 
   **Pagination**
 
