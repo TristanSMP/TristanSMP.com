@@ -138,19 +138,12 @@ Add a hashtag to the end of your command to perform additional actions.
 
   **Hashtags**
 
-+----------+----------------------------------------------------------+
 | Hashtag  | Effect                                                   |
-+----------+----------------------------------------------------------+
+| -------- | -------------------------------------------------------- |
 | #preview | Preview a rollback/restore                               |
-+----------+----------------------------------------------------------+
 | #count   | Return the number of rows found in a lookup query        |
-+----------+----------------------------------------------------------+
-| #verbose | Display additional information during a                  |
-|                    | rollback/restore                               |
-+----------+----------------------------------------------------------+
-| #silent  | Display minimal information during a                     |
-|                | rollback/restore                                   |
-+----------+----------------------------------------------------------+
+| #verbose | Display additional information during a rollback/restore |
+| #silent  | Display minimal information during a rollback/restore    |
 
 	**Example Commands**
 
