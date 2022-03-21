@@ -1,12 +1,12 @@
-import "tailwindcss/tailwind.css";
-import "../styles/blog.css";
-import Image from "next/image";
+import { User } from "@firebase/auth";
 import type { AppProps } from "next/app";
 import Head from "next/head";
+import Image from "next/image";
 import Link from "next/link";
-import { fauth, firebase } from "../utils";
 import { useEffect, useState } from "react";
-import { User } from "@firebase/auth";
+import "tailwindcss/tailwind.css";
+import "../styles/blog.css";
+import { fauth } from "../utils";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [user, setUser] = useState<User | null>(null);
@@ -17,11 +17,6 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, [user]);
   return (
     <>
-      <script
-        async
-        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8863904909693060"
-      />
-
       <Head>
         <link
           rel="apple-touch-icon"
