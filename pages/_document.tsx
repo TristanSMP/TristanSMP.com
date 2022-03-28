@@ -7,7 +7,7 @@ export default function Document() {
         <script
           async
           defer
-          data-website-id="d42f494a-6a54-4419-8ba0-4541c9c82651"
+          data-website-id="e10c5e60-e373-4539-9ae7-de16526e476d"
           src="https://tail.evie.pw/umami.js"
         />
       </Head>
